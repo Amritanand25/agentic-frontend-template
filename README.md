@@ -1,73 +1,126 @@
-# React + TypeScript + Vite
+# shadcn/ui Components Template
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, production-ready React template featuring a complete shadcn/ui component library showcase with dark mode support.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- ⚡ **Vite** - Fast build tool and dev server
+- ⚛️ **React 18** - Latest React with TypeScript
+- 🎨 **shadcn/ui** - Beautiful, accessible component library
+- 🌗 **Dark Mode** - Built-in theme toggle with system preference detection
+- 📱 **Responsive** - Mobile-friendly layout with sidebar navigation
+- 🎯 **TypeScript** - Full type safety
+- 🎭 **Tailwind CSS** - Utility-first styling
+- 🧭 **React Router** - Client-side routing
 
-## React Compiler
+## Component Library
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This template includes all major shadcn/ui components:
 
-## Expanding the ESLint configuration
+- **Layout**: Card, Separator, Aspect Ratio, Resizable
+- **Forms**: Input, Textarea, Checkbox, Radio, Select, Switch, Slider
+- **Navigation**: Tabs, Breadcrumb, Navigation Menu, Menubar, Pagination
+- **Feedback**: Alert, Toast (Sonner), Progress, Skeleton
+- **Overlays**: Dialog, Sheet, Drawer, Popover, Tooltip, Hover Card
+- **Data Display**: Table, Calendar, Badge, Avatar, Scroll Area
+- **Interactive**: Button, Toggle, Accordion, Collapsible, Carousel, Command
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Installation
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Install dependencies
+npm install
+# or
+yarn install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Start dev server
+npm run dev
+# or
+yarn dev
 ```
+
+Open [http://localhost:5173](http://localhost:5173) to view the component showcase.
+
+### Build
+
+```bash
+# Build for production
+npm run build
+# or
+yarn build
+```
+
+### Preview Production Build
+
+```bash
+# Preview production build
+npm run preview
+# or
+yarn preview
+```
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── ui/              # shadcn/ui components
+│   ├── components-layout.tsx
+│   ├── sidebar-nav.tsx
+│   └── theme-toggle.tsx
+├── pages/
+│   └── components/      # Component demo pages
+├── lib/
+│   └── utils.ts         # Utility functions
+├── App.tsx              # Router configuration
+└── main.tsx             # App entry point
+```
+
+## Customization
+
+### Theme Colors
+
+Modify theme colors in [src/index.css](src/index.css):
+
+```css
+:root {
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --primary: 240 5.9% 10%;
+  /* ... */
+}
+
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  /* ... */
+}
+```
+
+### Adding New Components
+
+```bash
+# Add a new shadcn/ui component
+npx shadcn@latest add [component-name]
+```
+
+## Tech Stack
+
+- [React](https://react.dev/) - UI library
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [Vite](https://vitejs.dev/) - Build tool
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [shadcn/ui](https://ui.shadcn.com/) - Component library
+- [Radix UI](https://www.radix-ui.com/) - Accessible primitives
+- [React Router](https://reactrouter.com/) - Routing
+- [Lucide React](https://lucide.dev/) - Icons
+
+## License
+
+MIT
