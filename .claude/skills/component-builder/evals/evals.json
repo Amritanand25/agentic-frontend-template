@@ -1,0 +1,23 @@
+{
+  "skill_name": "component-builder",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need a status badge component for our dashboard. It should show different statuses like 'active', 'pending', 'error', 'success' with appropriate colors. Make it available in small and medium sizes. The active status should be green, error red, pending yellow, and success also green but with a checkmark icon. Keep it simple and reusable.",
+      "expected_output": "A Badge component file with CVA variants for status types and sizes, using design tokens (var(--success-50), var(--error-50), etc.), including Lucide React icons, with TypeScript props, accessibility attributes (role, aria-label), and all interaction states. Should jump straight to code without LLD since it's a simple component.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "We need to build a data table component for displaying user data in our admin panel. It needs to support: sorting by any column (asc/desc), pagination (showing 10/25/50/100 rows per page), search/filter by name or email, row selection with checkboxes (select all, select individual), and bulk actions when rows are selected. The table should handle large datasets efficiently (we have tables with 10,000+ rows). Each row should show: avatar, name, email, role, status, and action buttons (edit/delete). Can you design this for me?",
+      "expected_output": "A comprehensive LLD document first (since this is complex), followed by implementation with: compound component pattern (DataTable.Header, DataTable.Row, etc.), virtualization for >100 rows (@tanstack/react-virtual), React.memo for rows, useCallback for handlers, proper ARIA attributes (role='table', aria-sort, etc.), CVA variants, design tokens, TypeScript interfaces, error boundaries, and test file structure. Should handle pagination state, sorting state, selection state.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "hey so we already have a button component at src/components/ui/button.tsx but i need to add a new 'warning' variant for destructive actions that aren't quite as severe as errors. like when someone wants to archive something vs delete it. the warning variant should use the warning-50 color from our design tokens and have the same hover/active states as the other variants. don't break any existing usage though, there's like 50+ components using this button already",
+      "expected_output": "Should first READ the existing button.tsx file, understand current variants (primary, secondary, tertiary, etc.), then make an ADDITIVE change by adding 'warning' variant to the CVA config using var(--warning-50) with appropriate hover/active states. Should update TypeScript types to include 'warning' in the variant union type. Should NOT modify existing variants or break the API. Should update tests to cover the new variant. Should verify no breaking changes by showing the modification is backwards-compatible.",
+      "files": []
+    }
+  ]
+}

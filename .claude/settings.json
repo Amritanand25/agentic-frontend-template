@@ -1,0 +1,44 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/prevent-secrets.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/prettier-format.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/lint-fix.sh"
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/type-check.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": []
+  },
+  "disabledMcpjsonServers": ["shadcn"]
+}

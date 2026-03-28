@@ -1,34 +1,47 @@
 # Multi-Tenant Progressive Web App
 
-Production-ready multi-tenant frontend with React 19, TypeScript, Vite, Tailwind v4. Feature + Page driven architecture.
+Production-ready multi-tenant frontend **Turborepo monorepo** with React 19, TypeScript, Vite, Tailwind v4. Feature + Page driven architecture.
 
 ## Tech Stack
 
+- **Monorepo**: Turborepo + Yarn Workspaces
 - **Package Manager**: Yarn (install: `npm install -g yarn`)
 - **Framework**: React 19.2.4 + TypeScript strict
 - **Build**: Vite 8.0.1
 - **Styling**: Tailwind CSS 4.2.2 + CSS tokens
 - **UI**: shadcn/ui (61+ components)
+- **State**: Zustand 5.0 (client state) + TanStack Query (server state)
 - **Icons**: Lucide React 1.7.0 (use only)
 - **Routing**: React Router DOM 7.13.1
 
-## Architecture
-
-**Features** = Business logic | **Pages** = Routes
+## Monorepo Structure
 
 ```
-src/
-├── features/users/      # Business logic (reusable)
-│   ├── api/             # getUsers(), createUser()
-│   ├── components/      # UserCard, UserForm
-│   ├── hooks/           # useUsers()
-│   └── index.ts         # Public API
-├── pages/dashboard/     # Routes
-│   ├── index.tsx        # /dashboard
-│   └── components/      # Page-specific layout
-├── components/ui/       # Global UI
-├── contexts/            # Auth, Tenant, Theme
-└── layouts/             # Page layouts
+/
+├── apps/
+│   ├── web/                  # React 19 PWA (Vite)
+│   │   └── src/
+│   │       ├── api/          # API client, interceptors
+│   │       ├── assets/       # Static assets (images, fonts)
+│   │       ├── components/   # App-specific components
+│   │       ├── config/       # App configuration
+│   │       ├── contexts/     # React Context (theme, providers)
+│   │       ├── features/     # Business logic (reusable within app)
+│   │       ├── hooks/        # App-level hooks
+│   │       ├── layouts/      # DashboardLayout, AuthLayout
+│   │       ├── lib/          # Third-party wrappers
+│   │       ├── pages/        # Route entries
+│   │       ├── stores/       # Global Zustand stores (auth, tenant, org)
+│   │       ├── types/        # App-level types
+│   │       └── utils/        # App-level utilities
+│   └── mobile/               # Mobile app (future)
+├── packages/
+│   ├── ui/                   # @repo/ui — shadcn/ui components (61+)
+│   ├── theme/                # @repo/theme — design tokens (tokens.css)
+│   └── utils/                # @repo/utils — cn(), shared utilities
+├── turbo.json                # Task pipeline
+├── tsconfig.base.json        # Shared TS config (strict mode)
+└── package.json              # Workspace root
 ```
 
 ## Quick Start
@@ -43,39 +56,23 @@ yarn dev              # Dev server
 
 **Before creating any component:**
 
-1. **Check existing** - Search `/src/components/ui/` (61+ components available)
+1. **Check existing** - Search `packages/ui/src/` (61+ components available)
 2. **If not exists** - Web search for package compatible with design system
 3. **If package found:**
    - Run `yarn check-pkg <package-name>`
    - If ✅ approved, install and integrate
 4. **If no package:**
    - Use `/ui-ux-design` skill to create component
-   - Create in `/src/components/ui/`
+   - Create in `packages/ui/src/`
    - Follow design token system
 5. **Use component** - Import and use in features/pages
 
 **For icons:**
+
 - **Always use Lucide React** (already installed)
 - Browse: [lucide.dev/icons](https://lucide.dev/icons)
 - Import: `import { User, Settings, Home } from 'lucide-react'`
 - Never install other icon libraries
-
-**Examples:**
-```typescript
-// Icons - use Lucide React
-import { User, Mail, Search } from 'lucide-react';
-
-<User className="h-4 w-4" />
-<Mail size={16} />
-
-// Existing component
-import { DatePicker } from '@/components/ui/date-picker';
-
-// New component - check package first
-yarn check-pkg slate-react
-// If approved: yarn add slate-react
-// If rejected: Use /ui-ux-design skill
-```
 
 ## Commands
 
@@ -101,60 +98,7 @@ yarn audit:fix        # Auto-fix vulnerabilities
 yarn check-pkg <package-name>
 ```
 
-**Auto-checks:**
-- ✅ Unpacked size (< 50KB good, < 100KB max)
-- ✅ Last update (< 6 months = maintained)
-- ✅ GitHub stars (> 1K = popular)
-- ✅ Dependencies (< 10 = minimal)
-- ✅ License (MIT/Apache preferred)
-
-**Size thresholds:**
-- < 50KB = ✅ Good
-- 50-100KB = ⚠️ Warning
-- > 100KB = ❌ Too large (reject)
-
-**Example:**
-```bash
-yarn check-pkg clsx
-
-# Size: 8.35 KB ✅
-# Updated: 1 year ago ❌
-# Stars: 9.7K ✅
-# Dependencies: 0 ✅
-# Recommendation: ⚠️ REVIEW WARNINGS
-```
-
-## Security Vulnerability Checks
-
-**Before deployment, run:**
-
-```bash
-yarn audit                    # Check dependencies for known vulnerabilities
-yarn audit:fix                # Auto-fix vulnerabilities
-yarn check-pkg <package>      # Check new packages before install
-```
-
-**Security tools:**
-- **yarn audit** - Built-in npm vulnerability scanner
-- **Snyk** - [snyk.io](https://snyk.io) for advanced scanning
-- **OWASP Dependency-Check** - Check against OWASP database
-
-**Automated checks:**
-```bash
-# Add to CI/CD pipeline
-yarn audit --audit-level=high  # Fail on high/critical
-yarn test:coverage             # Ensure > 90% coverage
-yarn build                     # Check build succeeds
-```
-
-**Security best practices:**
-- ✅ Never commit `.env` files
-- ✅ No hardcoded secrets/tokens
-- ✅ No sensitive data in localStorage
-- ✅ Validate all user inputs
-- ✅ Sanitize before rendering
-- ✅ HTTPS only in production
-- ✅ CSP headers configured
+**Thresholds:** Size < 100KB | Updated < 6 months | Stars > 1K | Deps < 10 | License MIT/Apache
 
 ## Git Hooks
 
@@ -167,13 +111,6 @@ yarn build                     # Check build succeeds
 - 2 modes: Light, Dark
 - **Never hardcode** - use tokens: `var(--primary-50)`, `var(--space-16)`
 
-## Multi-Tenancy
-
-- Tenant ID on every API call: `headers: { 'X-Tenant-ID': tenantId }`
-- Scope localStorage: `tenant-${tenantId}-${key}`
-- Feature flags per tenant
-- Dynamic theming per tenant
-
 ## React 19
 
 - `use()` for async (not useEffect)
@@ -181,50 +118,38 @@ yarn build                     # Check build succeeds
 - `useActionState` for forms
 - Ref is a prop (no forwardRef)
 
-## Performance
+## Security
 
-- Code split all routes (React.lazy)
-- Bundle: < 200KB gzipped
-- Virtualize lists > 100 items
-- Lighthouse > 90
-
-## PWA
-
-- Cache-First: Static assets
-- Network-First: API calls
-- Never cache: auth, payments
-- HTTPS only
+- ✅ Never commit `.env` files
+- ✅ No hardcoded secrets/tokens
+- ✅ No sensitive data in localStorage
+- ✅ Validate all user inputs (Zod)
+- ✅ Sanitize before rendering (DOMPurify)
+- ✅ HTTPS only in production
+- ✅ Run `yarn audit` before deploy
 
 ## Core Rules
 
-1. **Use existing first** - check /src/components/ui/ before creating
-2. **Feature + Page** - features = logic, pages = routes
-3. **Security** - audit before deploy, validate all inputs
-4. **Check packages** - run `yarn check-pkg` before install
-5. **Design tokens** - never hardcode values
-6. **TypeScript strict** - no `any`
-7. **React 19** - use(), transitions, actions
-8. **Multi-tenant** - tenant ID on all API calls
-9. **Performance** - code split routes
+1. **Use existing first** - check packages/ui/src/ before creating
+2. **Feature + Page** - features = logic, pages = routes (see architecture.md)
+3. **Check packages** - run `yarn check-pkg` before install
+4. **Design tokens** - never hardcode values
+5. **TypeScript strict** - no `any`
+6. **React 19** - use(), transitions, actions
+7. **Multi-tenant** - tenant ID + org ID on all API calls (see architecture.md)
+8. **PWA caching** - cache-first static, network-first API (see frontend-best-practices.md)
+9. **Performance** - code split routes, < 200KB bundle, Lighthouse > 90
 10. **Test coverage** - maintain > 90% coverage
 
 ## Targets
 
-- FCP < 1.5s
-- TTI < 3.5s
-- Bundle < 200KB
-- Lighthouse > 90
-- Test Coverage > 90%
+- FCP < 1.5s | TTI < 3.5s | Bundle < 200KB | Lighthouse > 90 | Coverage > 90%
 
 ## Resources
 
-**For design tokens & UI:**
-- Use `/ui-ux-design` skill for all design system queries
-- `/.claude/rules/` - Development rules
-
-**External:**
-- [shadcn/ui](https://ui.shadcn.com)
-- [Radix UI](https://radix-ui.com)
+- `/ui-ux-design` skill — design tokens & visual decisions
+- `/layout-creator` skill — page layout patterns
+- `/.claude/rules/` — architecture & frontend patterns
 
 ## Status
 

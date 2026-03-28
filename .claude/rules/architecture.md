@@ -1,233 +1,136 @@
----
-name: Architecture
-description: Feature + Page driven structure, component patterns, Git hooks
-type: rules
----
-
 # Architecture
 
-## Feature + Page Driven
+> Monorepo tree, tech stack, commands, component workflow, and package security are in CLAUDE.md. This file covers architecture patterns only.
 
-**Features** = Business logic (reusable)
-**Pages** = Routes (compose features)
+## Workspace Packages
 
-```
-src/
-├── features/users/
-│   ├── api/           # getUsers(), createUser()
-│   ├── components/    # UserCard, UserForm
-│   ├── hooks/         # useUsers(), useCreateUser()
-│   ├── types/         # User, CreateUserDto
-│   └── index.ts       # Public API export
-├── pages/dashboard/
-│   ├── index.tsx      # /dashboard route
-│   └── components/    # DashboardHeader (page-specific)
-├── components/ui/     # Global UI (shadcn/ui)
-├── contexts/          # Auth, Tenant, Theme
-├── layouts/           # DashboardLayout, AuthLayout
-└── api/               # API client
-```
+| Package          | Name          | Purpose                                | Consumed By           |
+| ---------------- | ------------- | -------------------------------------- | --------------------- |
+| `packages/ui`    | `@repo/ui`    | All UI components (shadcn/ui + custom) | apps/web, apps/mobile |
+| `packages/theme` | `@repo/theme` | CSS design tokens (`tokens.css`)       | apps/web, packages/ui |
+| `packages/utils` | `@repo/utils` | `cn()`, shared utilities               | apps/web, packages/ui |
 
-## How It Works
-
-**Feature exports:**
-```typescript
-// features/users/index.ts
-export { UserCard } from './components';
-export { useUsers } from './hooks';
-```
-
-**Page uses features:**
-```typescript
-// pages/dashboard/index.tsx
-import { UserCard } from '@/features/users';
-import { StatsCard } from '@/features/analytics';
-
-export function DashboardPage() {
-  return (
-    <DashboardLayout>
-      <StatsCard />
-      <UserCard />
-    </DashboardLayout>
-  );
-}
-```
+**Dependency flow:** `apps/*` → `packages/*` (never reverse, never between apps)
 
 ## Where to Put Code
 
-- **Global** (`/components/ui`) - used by 3+ features
-- **Features** (`/features/users`) - business logic, reusable
-- **Pages** (`/pages/dashboard`) - routes, page-specific layout
+| Scope                | Location                                 | Rule                                   |
+| -------------------- | ---------------------------------------- | -------------------------------------- |
+| Shared UI components | `packages/ui/src/`                       | Used across apps                       |
+| Design tokens        | `packages/theme/src/`                    | CSS custom properties                  |
+| Shared utilities     | `packages/utils/src/`                    | Pure functions only                    |
+| Business logic       | `apps/web/src/features/{domain}/`        | Export via index.ts                    |
+| Route-specific       | `apps/web/src/pages/{route}/components/` | Never import elsewhere                 |
+| Global stores        | `apps/web/src/stores/`                   | Auth, Tenant, Org (Zustand)            |
+| React Context        | `apps/web/src/contexts/`                 | Theme, providers, dependency injection |
 
-## Patterns
+## Feature + Page Pattern
 
-**shadcn/ui components:**
-```typescript
-import { cva } from 'class-variance-authority';
+**Features** = Reusable business logic | **Pages** = Routes that compose features
 
-const variants = cva('base', {
-  variants: { variant: {...}, size: {...} }
-});
-
-export function Button({ variant, size, ...props }) {
-  return <button className={cn(variants({ variant, size }))} {...props} />;
-}
+```
+apps/web/src/
+├── features/{domain}/
+│   ├── api/           # API calls
+│   ├── components/    # Domain components
+│   ├── hooks/         # Domain hooks
+│   ├── store/         # Zustand stores (domain-scoped)
+│   ├── types/         # Domain types
+│   └── index.ts       # Public API (only export what pages need)
+└── pages/{route}/
+    ├── index.tsx       # Route entry
+    └── components/     # Page-specific only
 ```
 
-**API calls:**
-```typescript
-// features/users/api/get-users.ts
-export async function getUsers() {
-  return apiClient.get('/users', {
-    headers: { 'X-Tenant-ID': tenantId }
-  });
-}
+## State Management
 
-// features/users/hooks/use-users.ts
-export function useUsers() {
-  return useQuery({ queryKey: ['users'], queryFn: getUsers });
-}
+| State Type          | Tool            | Scope             | Example                                      |
+| ------------------- | --------------- | ----------------- | -------------------------------------------- |
+| Server data         | TanStack Query  | Global (cached)   | Users list, posts, API responses             |
+| Global client state | Zustand         | Cross-page        | Auth, tenant, org, sidebar, theme preference |
+| Page-scoped state   | React Context   | Single page/route | Stepper state, page filters, wizard flow     |
+| Compound components | React Context   | Component tree    | Dropdown, accordion, tabs shared state       |
+| Form state          | React Hook Form | Single form       | Form inputs, validation                      |
+
+**When to use what:**
+
+- **Zustand** — State that persists across page navigation or is shared between unrelated components
+- **React Context** — State scoped to a page or component subtree that resets on unmount
+- **TanStack Query** — Anything from the server
+
+**Locations:**
+
+- Global stores: `apps/web/src/stores/` (auth, tenant, org)
+- Domain stores: `apps/web/src/features/{domain}/store/`
+- Page contexts: `apps/web/src/pages/{route}/contexts/`
+- App-level contexts: `apps/web/src/contexts/` (theme provider)
+
+**Zustand rules:**
+
+- One store per domain concern — not one giant store
+- Use selectors to prevent unnecessary re-renders: `useStore(state => state.count)`
+- Persist tenant/auth stores: `persist` middleware with scoped storage key
+- Reset tenant store on tenant switch, auth store on logout
+
+## Multi-Tenant / Multi-Org Hierarchy
+
+```
+Organization (org)
+└── Tenant (workspace/team)
+    └── User (member)
 ```
 
-**Context:**
-```typescript
-const Context = createContext<T | null>(null);
+- **Org store**: org-level settings, billing, SSO config
+- **Tenant store**: workspace config, theme, feature flags, permissions
+- **Auth store**: current user, tokens, roles within tenant
+- All three resolved at app bootstrap via Zustand stores in `stores/`
+- Route structure: `/:orgSlug/:tenantSlug/dashboard`
 
-export function useHook() {
-  const ctx = useContext(Context);
-  if (!ctx) throw new Error('Must use within Provider');
-  return ctx;
-}
-```
+## Data Isolation
 
-## Git Hooks (Husky)
-
-**Pre-commit** (fast ~1-3s):
-- Lints staged files (ESLint)
-- Formats code (Prettier)
-
-**Pre-push** (slow ~30-60s):
-- Builds project (`yarn build`)
-- Prevents push if build fails
-
-**Setup:**
-```bash
-yarn add -D husky lint-staged prettier
-yarn husky install
-echo 'yarn lint-staged' > .husky/pre-commit
-echo 'yarn build' > .husky/pre-push
-chmod +x .husky/pre-commit .husky/pre-push
-```
-
-**lint-staged config:**
-```json
-{
-  "lint-staged": {
-    "*.{ts,tsx}": ["eslint --fix", "prettier --write"]
-  }
-}
-```
+- API headers: `X-Tenant-ID` + `X-Org-ID` (always, via Axios interceptor)
+- LocalStorage: `org-${orgId}-tenant-${tenantId}-${key}`
+- React Query keys include tenant/org: `['users', orgId, tenantId]`
+- Feature flags resolved per tenant within org
+- Theme resolved per tenant (org can set defaults)
 
 ## Naming
 
-**Files:**
-- Components: kebab-case - `user-profile.tsx`, `avatar.tsx`
-- Hooks: kebab-case - `use-tenant.ts`, `use-auth.ts`
-- Utils: kebab-case - `api-client.ts`, `format-date.ts`
-- Folders: kebab-case - `user-management/`
+| What       | Convention             | Example                             |
+| ---------- | ---------------------- | ----------------------------------- |
+| Files      | kebab-case             | `user-profile.tsx`, `use-tenant.ts` |
+| Components | PascalCase             | `UserProfile`, `AlertDialog`        |
+| Variables  | camelCase, descriptive | `currentUser`, `userList`           |
+| Functions  | camelCase, verb-first  | `getUser()`, `handleSubmit()`       |
+| Constants  | UPPER_SNAKE_CASE       | `API_BASE_URL`                      |
+| Hooks      | `use` prefix           | `useTenant()`, `useOrgConfig()`     |
 
-**Inside files:**
-- Components: PascalCase - `UserProfile`, `Avatar`
-- Variables: camelCase - `currentUser`, `buttonVariants`
-- Functions: camelCase - `getUser()`, `handleSubmit()`
-- Constants: UPPER_SNAKE_CASE - `API_BASE_URL`
+No abbreviations. `currentUser` not `usr`. `createdAt` not `dt`.
 
-**Be descriptive:**
-- ❌ `usr`, `arr`, `dt`
-- ✅ `currentUser`, `userList`, `createdAt`
+## Imports
 
-## Import Aliases
+**Within apps/web** — use `@/` alias (resolves to `apps/web/src/`):
 
 ```typescript
-import { Button } from '@/components/ui/button';
-import { UserCard } from '@/features/users';
-import { useTenant } from '@/contexts/tenant-context';
+import { UserCard } from "@/features/users";
+import { useTenantStore } from "@/stores/tenant-store";
 ```
 
-## Package Security
+**Cross-package** — use `@repo/` scope:
 
-**Before installing ANY package:**
-
-```bash
-yarn check-pkg <package-name>
+```typescript
+import { Button } from "@repo/ui";
+import { cn } from "@repo/utils";
+import "@repo/theme/tokens.css";
 ```
 
-**Checks:**
-- Size (< 50KB ✅, 50-100KB ⚠️, > 100KB ❌)
-- Last update (< 6 months ✅)
-- GitHub stars (> 1K ✅)
-- Dependencies (< 10 ✅)
-- License (MIT/Apache ✅)
+## Turbo Pipeline
 
-**Reject if:**
-- Size > 100KB (hard limit)
-- Not updated in 6+ months
-- < 100 stars (low adoption)
-- > 10 dependencies (bloated)
+Tasks run in dependency order: `^build` means packages build before apps.
 
-## Testing Requirements
-
-**Test Coverage: > 90%**
-
-**What to test:**
-- ✅ Critical business logic (features)
-- ✅ Utility functions
-- ✅ API integration
-- ✅ Custom hooks
-- ✅ Component interactions
-
-**Test structure:**
 ```
-features/users/
-├── __tests__/
-│   ├── api.test.ts        # API calls
-│   ├── hooks.test.ts      # useUsers, etc.
-│   └── UserCard.test.tsx  # Component
+build  → dependsOn: [^build], outputs: [dist/**]
+dev    → no cache, persistent
+lint   → dependsOn: [^build]
+test   → dependsOn: [^build]
 ```
-
-**Coverage targets:**
-- Features: 90%+ (critical)
-- Utils: 90%+ (critical)
-- Components: 80%+ (important)
-- Pages: 70%+ (integration)
-
-**Commands:**
-```bash
-yarn test              # Run tests
-yarn test:coverage     # Check coverage
-yarn test:watch        # Watch mode
-```
-
-## Component Creation
-
-**Workflow:**
-1. Check `/src/components/ui/` first (61+ components)
-2. If not found → web search for package
-3. Check package → `yarn check-pkg <name>`
-4. If approved → install
-5. If rejected → use `/ui-ux-design` skill
-
-**Icons:** Always use Lucide React - `import { User } from 'lucide-react'`
-
-## Key Rules
-
-1. **Use existing first** - check components before creating
-2. **Feature + Page** - features = logic, pages = routes
-3. **Check packages** - run `yarn check-pkg` before install
-4. **Icons** - Lucide React only
-5. **Test coverage** - maintain > 90% overall
-6. **Features export public API** - via index.ts
-7. **Pages compose features** - no business logic in pages
-8. **Global = 3+ uses** - otherwise feature or page-specific
-9. **@/ imports** - always use path aliases
-10. **Pre-push** - full build + tests
