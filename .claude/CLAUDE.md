@@ -54,18 +54,21 @@ yarn dev              # Dev server
 
 ## Component Workflow
 
+**CRITICAL: Before creating ANY UI element, consult `/.claude/rules/component-catalog.md` for the full list of 62 available components. NEVER use native HTML (`<input>`, `<select>`, `<table>`, `<button>`) when `@repo/ui` has an equivalent.**
+
 **Before creating any component:**
 
-1. **Check existing** - Search `packages/ui/src/` (61+ components available)
-2. **If not exists** - Web search for package compatible with design system
-3. **If package found:**
+1. **Check catalog** - Read `/.claude/rules/component-catalog.md` (62 components with all exports listed)
+2. **Check existing** - Search `packages/ui/src/` if unsure
+3. **If not exists** - Web search for package compatible with design system
+4. **If package found:**
    - Run `yarn check-pkg <package-name>`
    - If ✅ approved, install and integrate
-4. **If no package:**
+5. **If no package:**
    - Use `/ui-ux-design` skill to create component
    - Create in `packages/ui/src/`
    - Follow design token system
-5. **Use component** - Import and use in features/pages
+6. **Use component** - Import from `@repo/ui` in features/pages
 
 **For icons:**
 
@@ -147,6 +150,7 @@ yarn check-pkg <package-name>
 
 ## Resources
 
+- `/.claude/rules/component-catalog.md` — **full component catalog (62 components, all exports, usage examples)**
 - `/ui-ux-design` skill — design tokens & visual decisions
 - `/layout-creator` skill — page layout patterns
 - `/.claude/rules/` — architecture & frontend patterns

@@ -1,3 +1,9 @@
-export type { TenantConfig, TenantBranding } from "./tenant"
-export type { User, UserRole, AuthTokens, LoginCredentials } from "./auth"
-export type { Org, OrgPlan, OrgSettings } from "./org"
+export type { TenantConfig, TenantBranding, Tenant } from "./tenant";
+export type {
+  User,
+  UserRole,
+  AuthTokens,
+  LoginCredentials,
+  SignupData,
+} from "./auth";
+export type { Org, OrgPlan, OrgSettings, Organization } from "./org";

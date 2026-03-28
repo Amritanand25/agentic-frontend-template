@@ -1,0 +1,172 @@
+/* Design system overrides for react-data-grid — tables feature */
+.rdg-theme {
+  --rdg-color: var(--text-default);
+  --rdg-background-color: var(--surface-0);
+  --rdg-header-background-color: var(--surface-10);
+  --rdg-header-draggable-background-color: var(--surface-20);
+  --rdg-row-hover-background-color: var(--primary-10);
+  --rdg-row-selected-background-color: var(--primary-20);
+  --rdg-row-selected-hover-background-color: var(--primary-20);
+  --rdg-border-color: var(--grey-30);
+  --rdg-selection-color: var(--primary-50);
+  --rdg-font-size: var(--font-size-m);
+  --rdg-checkbox-focus-color: var(--primary-60);
+  --rdg-summary-border-color: var(--grey-40);
+
+  border: none;
+  border-radius: 0;
+  font-family: var(--font-sans);
+  /* Fill the parent container instead of fixed height */
+  block-size: 100%;
+}
+
+.rdg-theme .rdg-header-row {
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-heading);
+  color: var(--text-subdued-1);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.rdg-theme .rdg-cell {
+  padding-inline: var(--space-16);
+  border-inline-end: none;
+  display: flex;
+  align-items: center;
+}
+
+.rdg-theme .rdg-header-row .rdg-cell {
+  border-inline-end: none;
+  padding-inline: var(--space-16);
+}
+
+.rdg-theme .rdg-row {
+  border-bottom: 1px solid var(--grey-20);
+}
+
+.rdg-theme .rdg-row:last-child {
+  border-bottom: none;
+}
+
+.rdg-theme .rdg-summary-row {
+  font-weight: var(--font-weight-prominent);
+  background-color: var(--surface-10);
+  border-top: 2px solid var(--grey-40);
+}
+
+/* Editor input */
+.rdg-theme .rdg-editor-container {
+  padding: 0;
+}
+
+.rdg-theme .rdg-editor-container input,
+.rdg-theme .rdg-editor-container textarea {
+  width: 100%;
+  height: 100%;
+  padding: 0 var(--space-16);
+  border: none;
+  outline: none;
+  background: var(--surface-0);
+  color: var(--text-default);
+  font-size: var(--font-size-m);
+  font-family: var(--font-sans);
+  box-shadow: inset 0 0 0 2px var(--primary-50);
+}
+
+/* Custom scrollbar styling */
+.rdg-theme ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.rdg-theme ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.rdg-theme ::-webkit-scrollbar-thumb {
+  background: var(--grey-40);
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.rdg-theme ::-webkit-scrollbar-thumb:hover {
+  background: var(--grey-50);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.rdg-theme ::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox scrollbar */
+.rdg-theme {
+  scrollbar-width: thin;
+  scrollbar-color: var(--grey-40) transparent;
+}
+
+/* Frozen column divider */
+.rdg-theme .rdg-cell-frozen-last {
+  box-shadow: 2px 0 4px -2px rgba(0, 0, 0, 0.08);
+}
+
+/* Cell value badges for select/multiselect fields */
+.rdg-cell-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.rdg-cell-badge + .rdg-cell-badge {
+  margin-left: 4px;
+}
+
+/* Boolean cell icons */
+.rdg-boolean-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+
+.rdg-boolean-cell--true {
+  background-color: var(--success-10, #dcfce7);
+  color: var(--success-50, #16a34a);
+}
+
+.rdg-boolean-cell--false {
+  background-color: var(--surface-10);
+  color: var(--text-subdued-2);
+}
+
+/* Email / URL links inside grid cells */
+.rdg-cell-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--primary-50);
+  text-decoration: none;
+  transition: text-decoration 150ms ease;
+}
+
+.rdg-cell-link:hover {
+  text-decoration: underline;
+}
+
+/* Empty cell placeholder */
+.rdg-cell-empty {
+  color: var(--text-subdued-2);
+}
+
+/* Tabular numbers for numeric/phone cells */
+.rdg-cell-number {
+  font-variant-numeric: tabular-nums;
+}
