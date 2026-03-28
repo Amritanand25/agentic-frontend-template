@@ -1,0 +1,333 @@
+/* Design system overrides for react-data-grid */
+.rdg-theme {
+  --rdg-color: var(--text-default);
+  --rdg-background-color: var(--surface-0);
+  --rdg-header-background-color: var(--surface-10);
+  --rdg-header-draggable-background-color: var(--surface-20);
+  --rdg-row-hover-background-color: var(--primary-10);
+  --rdg-row-selected-background-color: var(--primary-20);
+  --rdg-row-selected-hover-background-color: var(--primary-20);
+  --rdg-border-color: var(--grey-30);
+  --rdg-selection-color: var(--primary-50);
+  --rdg-font-size: var(--font-size-m);
+  --rdg-checkbox-focus-color: var(--primary-60);
+  --rdg-summary-border-color: var(--grey-40);
+
+  border-radius: var(--radius-12);
+  border: 1px solid var(--grey-30);
+  font-family: var(--font-sans);
+  block-size: 500px;
+}
+
+.rdg-theme .rdg-header-row {
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-heading);
+  color: var(--text-subdued-1);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.rdg-theme .rdg-cell {
+  padding-inline: var(--space-16);
+  border-inline-end: none;
+  display: flex;
+  align-items: center;
+}
+
+.rdg-theme .rdg-header-row .rdg-cell {
+  border-inline-end: none;
+  padding-inline: var(--space-16);
+}
+
+.rdg-theme .rdg-row {
+  border-bottom: 1px solid var(--grey-20);
+}
+
+.rdg-theme .rdg-row:last-child {
+  border-bottom: none;
+}
+
+.rdg-theme .rdg-summary-row {
+  font-weight: var(--font-weight-prominent);
+  background-color: var(--surface-10);
+  border-top: 2px solid var(--grey-40);
+}
+
+/* Editor input — full cell width */
+.rdg-theme .rdg-editor-container {
+  padding: 0;
+}
+
+.rdg-theme .rdg-editor-container input,
+.rdg-theme .rdg-editor-container textarea {
+  width: 100%;
+  height: 100%;
+  padding: 0 var(--space-16);
+  border: none;
+  outline: none;
+  background: var(--surface-0);
+  color: var(--text-default);
+  font-size: var(--font-size-m);
+  font-family: var(--font-sans);
+  box-shadow: inset 0 0 0 2px var(--primary-50);
+}
+
+.rdg-theme .rdg-editor-container input::placeholder,
+.rdg-theme .rdg-editor-container textarea::placeholder {
+  color: var(--text-subdued-2);
+  font-style: italic;
+}
+
+/* Custom scrollbar styling */
+.rdg-theme ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.rdg-theme ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.rdg-theme ::-webkit-scrollbar-thumb {
+  background: var(--grey-40);
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.rdg-theme ::-webkit-scrollbar-thumb:hover {
+  background: var(--grey-50);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.rdg-theme ::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox scrollbar */
+.rdg-theme {
+  scrollbar-width: thin;
+  scrollbar-color: var(--grey-40) transparent;
+}
+
+/* Frozen column divider */
+.rdg-theme .rdg-cell-frozen-last {
+  box-shadow: 2px 0 4px -2px rgba(0, 0, 0, 0.08);
+}
+
+/* Tree grid group row */
+.rdg-theme .rdg-group-row {
+  background-color: var(--surface-10);
+  font-weight: var(--font-weight-prominent);
+}
+
+.rdg-theme .rdg-group-row:hover {
+  background-color: var(--primary-10);
+}
+
+/* Status badge styles */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-2) var(--space-8);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-prominent);
+  line-height: var(--line-height-s);
+}
+
+.status-badge--active {
+  background-color: var(--success-20);
+  color: var(--success-80);
+}
+
+.status-badge--idle {
+  background-color: var(--warning-20);
+  color: var(--warning-80);
+}
+
+.status-badge--error {
+  background-color: var(--error-20);
+  color: var(--error-80);
+}
+
+/* Progress bar cell */
+.progress-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  width: 100%;
+}
+
+.progress-track {
+  flex: 1;
+  height: 6px;
+  background: var(--grey-20);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: var(--primary-50);
+  transition: width 200ms ease-out;
+}
+
+.progress-label {
+  font-size: var(--font-size-s);
+  color: var(--text-subdued-1);
+  min-width: 32px;
+  text-align: right;
+}
+
+/* Avatar cell */
+.avatar-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.avatar-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: var(--primary-20);
+  color: var(--primary-60);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-prominent);
+  flex-shrink: 0;
+}
+
+/* Email validation error */
+.rdg-email-editor {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.rdg-email-editor input {
+  box-shadow: inset 0 0 0 2px var(--primary-50);
+}
+
+.rdg-email-editor.rdg-email-invalid input {
+  box-shadow: inset 0 0 0 2px var(--error-60);
+}
+
+.rdg-email-error {
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  font-size: var(--font-size-xs, 11px);
+  color: var(--error-60);
+  white-space: nowrap;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Shimmer / skeleton loading */
+.shimmer-cell {
+  width: 100%;
+  height: 16px;
+}
+
+.shimmer-bar {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-4);
+  background: linear-gradient(
+    90deg,
+    var(--grey-20) 25%,
+    var(--grey-30) 50%,
+    var(--grey-20) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Master-detail nested grid */
+.rdg-detail-grid {
+  border-radius: var(--radius-8);
+  block-size: auto !important;
+}
+
+/* Detail row: colspan cell must stretch to fill row height */
+.rdg-theme .rdg-row .rdg-cell[aria-colspan] {
+  overflow: auto;
+  padding: 0;
+  align-items: stretch;
+}
+
+/* Row edit mode */
+.rdg-row-editing {
+  background-color: var(--primary-10) !important;
+  box-shadow: inset 0 0 0 1px var(--primary-40);
+}
+
+.row-edit-input {
+  width: 100%;
+  height: 32px;
+  padding: 0 var(--space-8);
+  border: 1px solid var(--grey-40);
+  border-radius: var(--radius-6);
+  background: var(--surface-0);
+  color: var(--text-default);
+  font-size: var(--font-size-m);
+  font-family: var(--font-sans);
+  outline: none;
+}
+
+.row-edit-input:focus {
+  border-color: var(--primary-50);
+  box-shadow: 0 0 0 1px var(--primary-50);
+}
+
+.row-edit-input::placeholder {
+  color: var(--text-subdued-2);
+}
+
+.row-edit-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-6);
+  border: 1px solid var(--grey-40);
+  background: var(--surface-0);
+  color: var(--text-subdued-1);
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+
+.row-edit-action-btn:hover {
+  background: var(--grey-20);
+  color: var(--text-default);
+}
+
+.row-edit-action-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.row-edit-save:hover {
+  border-color: var(--success-50);
+  color: var(--success-50);
+  background: var(--success-20);
+}
+
+.row-edit-cancel:hover {
+  border-color: var(--error-50);
+  color: var(--error-50);
+  background: var(--error-20);
+}

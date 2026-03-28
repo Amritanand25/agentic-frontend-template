@@ -1,0 +1,422 @@
+:root {
+  /* Typography */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  --font-size-xs: 11px;
+  --font-size-s: 12px;
+  --font-size-m: 14px;
+  --font-size-l: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 32px;
+  --font-size-4xl: 40px;
+  --font-size-5xl: 48px;
+  --font-size-6xl: 56px;
+  --font-size-7xl: 64px;
+  --font-size-8xl: 88px;
+  --font-size-heading: 24px;
+
+  --font-weight-regular: 400;
+  --font-weight-prominent: 500;
+  --font-weight-heading: 600;
+
+  --line-height-xs: 14px;
+  --line-height-s: 16px;
+  --line-height-m: 20px;
+  --line-height-l: 24px;
+  --line-height-xl: 32px;
+  --line-height-2xl: 32px;
+  --line-height-3xl: 42px;
+  --line-height-4xl: 48px;
+  --line-height-5xl: 58px;
+  --line-height-6xl: 62px;
+  --line-height-7xl: 64px;
+  --line-height-8xl: 84px;
+
+  --letter-spacing-baggy: 0px;
+  --letter-spacing-loose: -0.2px;
+  --letter-spacing-comfy: -0.4px;
+  --letter-spacing-fitted: -0.6px;
+  --letter-spacing-snug: -1px;
+  --letter-spacing-tight: -2px;
+
+  /* Spacing */
+  --space-0: 0px;
+  --space-1: 1px;
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-80: 80px;
+
+  /* Border Radius */
+  --radius-0: 0px;
+  --radius-4: 4px;
+  --radius-6: 6px;
+  --radius-8: 8px;
+  --radius-12: 12px;
+  --radius-16: 16px;
+  --radius-24: 24px;
+  --radius-32: 32px;
+  --radius-full: 250px;
+
+  /* Component Heights */
+  --height-xs: 24px;
+  --height-s: 32px;
+  --height-m: 40px;
+  --height-l: 48px;
+  --height-xl: 64px;
+
+  /* Mode-independent colors */
+  --white: #ffffff;
+  --black: #141414;
+}
+
+/* ----------------------------------------------------------
+   2. FALCON THEME — Primary Colors
+   ---------------------------------------------------------- */
+:root,
+[data-theme="falcon"] {
+  --primary-10: #f4f4fc;
+  --primary-20: #e8e8fc;
+  --primary-30: #9999ff;
+  --primary-40: #6464ff;
+  --primary-50: #3535f3;
+  --primary-60: #000093;
+  --primary-70: #00004c;
+  --primary-80: #010029;
+  --primary-inverse: #ffffff;
+}
+
+[data-theme="falcon"][data-mode="dark"] {
+  --primary-10: #1e1f2e;
+  --primary-20: #33333f;
+  --primary-30: #393968;
+  --primary-40: #4040a0;
+  --primary-50: #5252ef;
+  --primary-60: #7f7ffb;
+  --primary-70: #ababfc;
+  --primary-80: #adadfc;
+  --primary-inverse: #ffffff;
+}
+
+/* ----------------------------------------------------------
+   3. PHOENIX THEME — Primary Colors
+   ---------------------------------------------------------- */
+[data-theme="phoenix"] {
+  --primary-10: #f7f5fc;
+  --primary-20: #eee8fc;
+  --primary-30: #c3adff;
+  --primary-40: #9770ff;
+  --primary-50: #6933fa;
+  --primary-60: #370b8f;
+  --primary-70: #1b0052;
+  --primary-80: #0e0029;
+  --primary-inverse: #ffffff;
+}
+
+[data-theme="phoenix"][data-mode="dark"] {
+  --primary-10: #221e2e;
+  --primary-20: #36333f;
+  --primary-30: #37227a;
+  --primary-40: #5532b8;
+  --primary-50: #8154fc;
+  --primary-60: #9e7aff;
+  --primary-70: #c3adff;
+  --primary-80: #e1d6ff;
+  --primary-inverse: #ffffff;
+}
+
+/* ----------------------------------------------------------
+   4. JARVIS THEME — Primary Colors
+   ---------------------------------------------------------- */
+[data-theme="jarvis"] {
+  --primary-10: #f7fcfc;
+  --primary-20: #e6faf7;
+  --primary-30: #a6f5e9;
+  --primary-40: #31ccb5;
+  --primary-50: #278476;
+  --primary-60: #175249;
+  --primary-70: #0f332e;
+  --primary-80: #081a17;
+  --primary-inverse: #ffffff;
+}
+
+[data-theme="jarvis"][data-mode="dark"] {
+  --primary-10: #1b2927;
+  --primary-20: #34403e;
+  --primary-30: #1f4741;
+  --primary-40: #23665d;
+  --primary-50: #278476;
+  --primary-60: #5cb8ac;
+  --primary-70: #92d6ce;
+  --primary-80: #d6fffa;
+  --primary-inverse: #ffffff;
+}
+
+/* ----------------------------------------------------------
+   5. SECONDARY COLORS (Marigold — same all themes)
+   ---------------------------------------------------------- */
+:root,
+[data-mode="light"] {
+  --secondary-10: #fcf9f2;
+  --secondary-20: #fef7e9;
+  --secondary-30: #ffe3ae;
+  --secondary-40: #ffd947;
+  --secondary-50: #f7ab20;
+  --secondary-60: #ac660c;
+  --secondary-70: #7f4b10;
+  --secondary-80: #401d0c;
+  --secondary-inverse: #401d0c;
+}
+
+[data-mode="dark"] {
+  --secondary-10: #1c160a;
+  --secondary-20: #3c2e16;
+  --secondary-30: #675228;
+  --secondary-40: #8d713a;
+  --secondary-50: #f9be53;
+  --secondary-60: #fbd187;
+  --secondary-70: #fce2b2;
+  --secondary-80: #fef2dd;
+  --secondary-inverse: #fef7e9;
+}
+
+/* ----------------------------------------------------------
+   6. TERTIARY COLORS (Teal — same all themes)
+   ---------------------------------------------------------- */
+:root,
+[data-mode="light"] {
+  --tertiary-10: #f7fcfc;
+  --tertiary-20: #e6faf7;
+  --tertiary-30: #a6f5e9;
+  --tertiary-40: #31ccb5;
+  --tertiary-50: #278476;
+  --tertiary-60: #175249;
+  --tertiary-70: #0f332e;
+  --tertiary-80: #081a17;
+  --tertiary-inverse: #ffffff;
+}
+
+[data-mode="dark"] {
+  --tertiary-10: #1b2927;
+  --tertiary-20: #34403e;
+  --tertiary-30: #1f4741;
+  --tertiary-40: #23665d;
+  --tertiary-50: #278476;
+  --tertiary-60: #5cb8ac;
+  --tertiary-70: #92d6ce;
+  --tertiary-80: #d6fffa;
+  --tertiary-inverse: #ffffff;
+}
+
+/* ----------------------------------------------------------
+   7. NEUTRAL COLORS
+   ---------------------------------------------------------- */
+:root,
+[data-mode="light"] {
+  --grey-10: #fafafa;
+  --grey-20: #f5f5f5;
+  --grey-30: #f0f0f0;
+  --grey-40: #e0e0e0;
+  --grey-50: #c9c9c9;
+  --grey-60: #b5b5b5;
+  --grey-80: rgba(0,0,0,0.65);
+  --grey-100: #141414;
+}
+
+[data-mode="dark"] {
+  --grey-10: #1f1f20;
+  --grey-20: #19191a;
+  --grey-30: #141414;
+  --grey-40: #5a5a5a;
+  --grey-50: #757575;
+  --grey-60: #b5b5b5;
+  --grey-80: rgba(255,255,255,0.78);
+  --grey-100: #f0f0f0;
+}
+
+/* ----------------------------------------------------------
+   8. FEEDBACK COLORS (80/20 swap in dark mode)
+   ---------------------------------------------------------- */
+:root,
+[data-mode="light"] {
+  --success-80: #135610;
+  --success-60: #1c7a18;
+  --success-50: #25ab21;
+  --success-20: #e9f7e9;
+  --warning-80: #7d2f08;
+  --warning-60: #c4560d;
+  --warning-50: #f06d0f;
+  --warning-20: #fef0e7;
+  --error-80: #660014;
+  --error-60: #c40027;
+  --error-50: #f50031;
+  --error-20: #fee6ea;
+}
+
+[data-mode="dark"] {
+  --success-80: #e9f7e9;
+  --success-60: #3dc438;
+  --success-50: #25ab21;
+  --success-20: #135610;
+  --warning-80: #fef0e7;
+  --warning-60: #f5943f;
+  --warning-50: #f06d0f;
+  --warning-20: #7d2f08;
+  --error-80: #fee6ea;
+  --error-60: #ff4d6a;
+  --error-50: #f50031;
+  --error-20: #660014;
+}
+
+/* ----------------------------------------------------------
+   9. SURFACES
+   ---------------------------------------------------------- */
+:root,
+[data-mode="light"] {
+  --surface-0: #ffffff;
+  --surface-10: #fafafa;
+  --surface-20: #f5f5f5;
+  --surface-30: #f0f0f0;
+  --blur: rgba(0,0,0,0.65);
+  --opacity-20: rgba(255,255,255,0.2);
+  --opacity-10: rgba(255,255,255,0.1);
+}
+
+[data-mode="dark"] {
+  --surface-0: #262627;
+  --surface-10: #1f1f20;
+  --surface-20: #19191a;
+  --surface-30: #141414;
+  --blur: rgba(0,0,0,0.65);
+  --opacity-20: rgba(0,0,0,0.1);
+  --opacity-10: rgba(0,0,0,0.05);
+}
+
+/* ----------------------------------------------------------
+   10. TEXT COLORS
+   ---------------------------------------------------------- */
+:root,
+[data-mode="light"] {
+  --text-default: #141414;
+  --text-subdued-1: rgba(0,0,0,0.65);
+  --text-subdued-2: #b5b5b5;
+  --text-inverse: #ffffff;
+  --text-on-primary: var(--primary-inverse);
+}
+
+[data-mode="dark"] {
+  --text-default: #f0f0f0;
+  --text-subdued-1: rgba(255,255,255,0.78);
+  --text-subdued-2: #b5b5b5;
+  --text-inverse: #ffffff;
+  --text-on-primary: var(--primary-inverse);
+}
+
+/* ----------------------------------------------------------
+   11. SHADOWS
+   ---------------------------------------------------------- */
+:root,
+[data-mode="light"] {
+  --shadow-small: 0px 4px 16px rgba(0,0,0,0.08);
+  --shadow-medium: 0px 4px 16px rgba(0,0,0,0.16);
+  --shadow-large: 0px 4px 16px rgba(0,0,0,0.24);
+  --shadow-scroll: 0px -4px 16px rgba(0,0,0,0.08);
+  --shadow-popover: 0px 4px 16px rgba(0,0,0,0.16);
+}
+
+[data-mode="dark"] {
+  --shadow-small: 0px 4px 16px rgba(0,0,0,0.24);
+  --shadow-medium: 0px 4px 16px rgba(0,0,0,0.32);
+  --shadow-large: 0px 4px 16px rgba(0,0,0,0.48);
+  --shadow-scroll: 0px -4px 16px rgba(0,0,0,0.24);
+  --shadow-popover: 0px 4px 16px rgba(255,255,255,0.1);
+}
+
+/* ----------------------------------------------------------
+   12. SHADCN BRIDGE — Map design tokens to shadcn variables
+   These allow all existing shadcn/ui components to consume
+   our design system tokens automatically.
+   ---------------------------------------------------------- */
+:root,
+[data-mode="light"] {
+  --background: var(--surface-10);
+  --foreground: var(--text-default);
+  --card: var(--surface-0);
+  --card-foreground: var(--text-default);
+  --popover: var(--surface-0);
+  --popover-foreground: var(--text-default);
+  --primary: var(--primary-50);
+  --primary-foreground: var(--primary-inverse);
+  --secondary: var(--primary-20);
+  --secondary-foreground: var(--primary-60);
+  --muted: var(--grey-20);
+  --muted-foreground: var(--text-subdued-1);
+  --accent: var(--primary-10);
+  --accent-foreground: var(--primary-60);
+  --destructive: var(--error-50);
+  --destructive-foreground: var(--text-inverse);
+  --border: var(--grey-40);
+  --input: var(--grey-40);
+  --ring: var(--primary-60);
+  --radius: var(--radius-8);
+  --sidebar-background: var(--surface-20);
+  --sidebar-foreground: var(--text-default);
+  --sidebar-primary: var(--primary-50);
+  --sidebar-primary-foreground: var(--primary-inverse);
+  --sidebar-accent: var(--primary-10);
+  --sidebar-accent-foreground: var(--primary-60);
+  --sidebar-border: var(--grey-40);
+  --sidebar-ring: var(--primary-60);
+  --chart-1: var(--primary-50);
+  --chart-2: var(--secondary-50);
+  --chart-3: var(--tertiary-50);
+  --chart-4: var(--primary-30);
+  --chart-5: var(--secondary-30);
+}
+
+[data-mode="dark"] {
+  --background: var(--surface-10);
+  --foreground: var(--text-default);
+  --card: var(--surface-0);
+  --card-foreground: var(--text-default);
+  --popover: var(--surface-0);
+  --popover-foreground: var(--text-default);
+  --primary: var(--primary-50);
+  --primary-foreground: var(--primary-inverse);
+  --secondary: var(--primary-20);
+  --secondary-foreground: var(--primary-60);
+  --muted: var(--grey-20);
+  --muted-foreground: var(--text-subdued-1);
+  --accent: var(--primary-10);
+  --accent-foreground: var(--primary-60);
+  --destructive: var(--error-50);
+  --destructive-foreground: var(--text-inverse);
+  --border: var(--grey-40);
+  --input: var(--grey-40);
+  --ring: var(--primary-60);
+  --radius: var(--radius-8);
+  --sidebar-background: var(--surface-20);
+  --sidebar-foreground: var(--text-default);
+  --sidebar-primary: var(--primary-50);
+  --sidebar-primary-foreground: var(--primary-inverse);
+  --sidebar-accent: var(--primary-10);
+  --sidebar-accent-foreground: var(--primary-60);
+  --sidebar-border: var(--grey-40);
+  --sidebar-ring: var(--primary-60);
+  --chart-1: var(--primary-50);
+  --chart-2: var(--secondary-50);
+  --chart-3: var(--tertiary-50);
+  --chart-4: var(--primary-30);
+  --chart-5: var(--secondary-30);
+}
