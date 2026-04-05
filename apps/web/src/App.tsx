@@ -18,6 +18,32 @@ const SelectTenantPage = lazy(() => import("./pages/select-tenant-page"));
 // -- Relio landing --
 const RelioHomePage = lazy(() => import("./pages/apps/relio/index"));
 
+// -- Granary pages (lazy loaded) --
+const GranaryLayout = lazy(
+  () => import("./features/granary/components/granary-layout"),
+);
+const GranaryHomePage = lazy(() => import("./pages/granary/home-page"));
+const GranaryDashboardPage = lazy(
+  () => import("./pages/granary/dashboard-page"),
+);
+const BaselineForecastPage = lazy(
+  () => import("./pages/granary/baseline-forecast-page"),
+);
+const CategoryOverviewPage = lazy(
+  () => import("./pages/granary/category-overview-page"),
+);
+const SubCategoryDetailPage = lazy(
+  () => import("./pages/granary/sub-category-detail-page"),
+);
+const RangeReviewPage = lazy(() => import("./pages/granary/range-review-page"));
+const RequestsPage = lazy(() => import("./pages/granary/requests-page"));
+const RequestDetailPage = lazy(
+  () => import("./pages/granary/request-detail-page"),
+);
+const DelistRequestPage = lazy(
+  () => import("./pages/granary/delist-request/delist-request-page"),
+);
+
 // -- App pages (lazy loaded, inside protected layout) --
 const DashboardPage = lazy(() => import("./pages/app/dashboard/index"));
 const ObjectsPage = lazy(() => import("./pages/app/objects/index"));
@@ -130,6 +156,7 @@ const FilterPillPage = lazy(
 );
 const DropdownPage = lazy(() => import("./pages/components/dropdown-page"));
 const TitleBarPage = lazy(() => import("./pages/components/title-bar-page"));
+const SidebarPage = lazy(() => import("./pages/components/sidebar-page"));
 
 // Data Grid pages
 const BasicGridPage = lazy(
@@ -240,6 +267,33 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/apps/relio" element={<RelioHomePage />} />
+
+            {/* ===== Granary routes (own layout with sidebar + header) ===== */}
+            <Route path="/granary" element={<GranaryLayout />}>
+              <Route path="home" element={<GranaryHomePage />} />
+              <Route path="dashboard" element={<GranaryDashboardPage />} />
+              <Route path="forecasting">
+                <Route path="baseline" element={<BaselineForecastPage />} />
+              </Route>
+              <Route path="assortment">
+                <Route path="category" element={<CategoryOverviewPage />} />
+                <Route
+                  path="category/:categoryId/sub/:subCategoryId"
+                  element={<SubCategoryDetailPage />}
+                />
+                <Route path="range-review" element={<RangeReviewPage />} />
+                <Route path="requests" element={<RequestsPage />} />
+                <Route
+                  path="requests/:requestId"
+                  element={<RequestDetailPage />}
+                />
+              </Route>
+            </Route>
+            {/* Delist wizard is full-screen (no sidebar) */}
+            <Route
+              path="/granary/assortment/delist-request"
+              element={<DelistRequestPage />}
+            />
 
             {/* ===== Auth flow routes (require authentication, no sidebar) ===== */}
             <Route path="/select-org" element={<SelectOrgPage />} />
@@ -352,6 +406,7 @@ function App() {
               <Route path="filter-pill" element={<FilterPillPage />} />
               <Route path="dropdown" element={<DropdownPage />} />
               <Route path="title-bar" element={<TitleBarPage />} />
+              <Route path="sidebar" element={<SidebarPage />} />
               {/* Data Grid routes */}
               <Route path="data-grid/basic" element={<BasicGridPage />} />
               <Route path="data-grid/editable" element={<EditableGridPage />} />

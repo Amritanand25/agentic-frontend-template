@@ -1,9 +1,7 @@
-import { useState, useMemo } from "react"
-import { TreeDataGrid, type Column, type RenderGroupCellProps } from "react-data-grid"
-import { ChevronRight } from "lucide-react"
-import "react-data-grid/lib/styles.css"
-import "./data-grid-theme.css"
-import { sampleRows, type Employee } from "./sample-data"
+import { useState, useMemo } from "react";
+import { TreeDataGrid, type Column, type RenderGroupCellProps } from "@repo/ui";
+import { ChevronRight } from "lucide-react";
+import { sampleRows, type Employee } from "./sample-data";
 
 const columns: Column<Employee>[] = [
   {
@@ -22,9 +20,14 @@ const columns: Column<Employee>[] = [
     width: 120,
     renderCell: ({ row }) => `$${row.salary.toLocaleString()}`,
   },
-]
+];
 
-function GroupCell({ groupKey, isExpanded, toggleGroup, childRows }: RenderGroupCellProps<Employee>) {
+function GroupCell({
+  groupKey,
+  isExpanded,
+  toggleGroup,
+  childRows,
+}: RenderGroupCellProps<Employee>) {
   return (
     <div
       style={{
@@ -46,41 +49,73 @@ function GroupCell({ groupKey, isExpanded, toggleGroup, childRows }: RenderGroup
           color: "var(--text-subdued-1)",
         }}
       />
-      <span style={{ fontWeight: "var(--font-weight-prominent)", color: "var(--text-default)" }}>
+      <span
+        style={{
+          fontWeight: "var(--font-weight-prominent)",
+          color: "var(--text-default)",
+        }}
+      >
         {String(groupKey)}
       </span>
-      <span style={{ fontSize: "var(--font-size-s)", color: "var(--text-subdued-2)", marginLeft: "auto" }}>
+      <span
+        style={{
+          fontSize: "var(--font-size-s)",
+          color: "var(--text-subdued-2)",
+          marginLeft: "auto",
+        }}
+      >
         {childRows.length} {childRows.length === 1 ? "employee" : "employees"}
       </span>
     </div>
-  )
+  );
 }
 
-function rowGrouper(rows: readonly Employee[], columnKey: string): Record<string, readonly Employee[]> {
-  const groups: Record<string, Employee[]> = {}
+function rowGrouper(
+  rows: readonly Employee[],
+  columnKey: string,
+): Record<string, readonly Employee[]> {
+  const groups: Record<string, Employee[]> = {};
   for (const row of rows) {
-    const key = String(row[columnKey as keyof Employee])
-    if (!groups[key]) groups[key] = []
-    groups[key].push(row)
+    const key = String(row[columnKey as keyof Employee]);
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(row);
   }
-  return groups
+  return groups;
 }
 
 export default function TreeGridPage() {
-  const [expandedGroupIds, setExpandedGroupIds] = useState<ReadonlySet<unknown>>(
-    () => new Set(["United States", "Germany"])
-  )
+  const [expandedGroupIds, setExpandedGroupIds] = useState<
+    ReadonlySet<unknown>
+  >(() => new Set(["United States", "Germany"]));
 
-  const rows = useMemo(() => sampleRows, [])
+  const rows = useMemo(() => sampleRows, []);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-32)" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "var(--space-32)",
+      }}
+    >
       <div>
-        <h1 style={{ fontSize: "var(--font-size-2xl)", fontWeight: "var(--font-weight-heading)", color: "var(--text-default)" }}>
+        <h1
+          style={{
+            fontSize: "var(--font-size-2xl)",
+            fontWeight: "var(--font-weight-heading)",
+            color: "var(--text-default)",
+          }}
+        >
           Tree / Grouped Grid
         </h1>
-        <p style={{ color: "var(--text-subdued-1)", marginTop: "var(--space-8)" }}>
-          Rows grouped by Country with expand/collapse. Click the chevron or use arrow keys to toggle groups.
+        <p
+          style={{
+            color: "var(--text-subdued-1)",
+            marginTop: "var(--space-8)",
+          }}
+        >
+          Rows grouped by Country with expand/collapse. Click the chevron or use
+          arrow keys to toggle groups.
         </p>
       </div>
 
@@ -97,5 +132,5 @@ export default function TreeGridPage() {
         className="rdg-theme"
       />
     </div>
-  )
+  );
 }

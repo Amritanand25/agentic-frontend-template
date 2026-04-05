@@ -1,12 +1,14 @@
-import { useMemo, useState } from "react"
-import { DataGrid, type Column, type SortColumn } from "react-data-grid"
-import "react-data-grid/lib/styles.css"
-import "./data-grid-theme.css"
-import { sampleRows, type Employee } from "./sample-data"
-import { gridRenderers } from "./grid-renderers"
+import { useMemo, useState } from "react";
+import {
+  DataGrid,
+  type Column,
+  type SortColumn,
+  gridRenderers,
+} from "@repo/ui";
+import { sampleRows, type Employee } from "./sample-data";
 
 export default function SortableFilterableGridPage() {
-  const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([])
+  const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
 
   const columns: Column<Employee>[] = useMemo(
     () => [
@@ -24,30 +26,47 @@ export default function SortableFilterableGridPage() {
         renderCell: ({ row }) => `$${row.salary.toLocaleString()}`,
       },
     ],
-    []
-  )
+    [],
+  );
 
   const sortedRows = useMemo(() => {
-    if (sortColumns.length === 0) return sampleRows
+    if (sortColumns.length === 0) return sampleRows;
 
     return [...sampleRows].sort((a, b) => {
       for (const { columnKey, direction } of sortColumns) {
-        const aVal = a[columnKey as keyof Employee]
-        const bVal = b[columnKey as keyof Employee]
-        if (aVal < bVal) return direction === "ASC" ? -1 : 1
-        if (aVal > bVal) return direction === "ASC" ? 1 : -1
+        const aVal = a[columnKey as keyof Employee];
+        const bVal = b[columnKey as keyof Employee];
+        if (aVal < bVal) return direction === "ASC" ? -1 : 1;
+        if (aVal > bVal) return direction === "ASC" ? 1 : -1;
       }
-      return 0
-    })
-  }, [sortColumns])
+      return 0;
+    });
+  }, [sortColumns]);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-32)" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "var(--space-32)",
+      }}
+    >
       <div>
-        <h1 style={{ fontSize: "var(--font-size-2xl)", fontWeight: "var(--font-weight-heading)", color: "var(--text-default)" }}>
+        <h1
+          style={{
+            fontSize: "var(--font-size-2xl)",
+            fontWeight: "var(--font-weight-heading)",
+            color: "var(--text-default)",
+          }}
+        >
           Sortable Grid
         </h1>
-        <p style={{ color: "var(--text-subdued-1)", marginTop: "var(--space-8)" }}>
+        <p
+          style={{
+            color: "var(--text-subdued-1)",
+            marginTop: "var(--space-8)",
+          }}
+        >
           Click column headers to sort. Ctrl+Click for multi-column sort.
         </p>
       </div>
@@ -64,9 +83,14 @@ export default function SortableFilterableGridPage() {
         className="rdg-theme"
       />
 
-      <p style={{ fontSize: "var(--font-size-s)", color: "var(--text-subdued-2)" }}>
+      <p
+        style={{
+          fontSize: "var(--font-size-s)",
+          color: "var(--text-subdued-2)",
+        }}
+      >
         {sortedRows.length} rows
       </p>
     </div>
-  )
+  );
 }

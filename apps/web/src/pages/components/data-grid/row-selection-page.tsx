@@ -1,9 +1,6 @@
-import { useState, useMemo } from "react"
-import { DataGrid, type Column, SelectColumn } from "react-data-grid"
-import "react-data-grid/lib/styles.css"
-import "./data-grid-theme.css"
-import { sampleRows, type Employee } from "./sample-data"
-import { gridRenderers } from "./grid-renderers"
+import { useState, useMemo } from "react";
+import { DataGrid, type Column, SelectColumn, gridRenderers } from "@repo/ui";
+import { sampleRows, type Employee } from "./sample-data";
 
 const columns: Column<Employee>[] = [
   SelectColumn,
@@ -19,20 +16,44 @@ const columns: Column<Employee>[] = [
     width: 120,
     renderCell: ({ row }) => `$${row.salary.toLocaleString()}`,
   },
-]
+];
 
 export default function RowSelectionGridPage() {
-  const rows = useMemo(() => sampleRows.slice(0, 30), [])
-  const [selectedRows, setSelectedRows] = useState<ReadonlySet<number>>(() => new Set())
+  const rows = useMemo(() => sampleRows.slice(0, 30), []);
+  const [selectedRows, setSelectedRows] = useState<Set<number>>(
+    () => new Set(),
+  );
+
+  const handleSelectedRowsChange = (rows: Set<React.Key>) => {
+    setSelectedRows(rows as unknown as Set<number>);
+  };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-32)" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "var(--space-32)",
+      }}
+    >
       <div>
-        <h1 style={{ fontSize: "var(--font-size-2xl)", fontWeight: "var(--font-weight-heading)", color: "var(--text-default)" }}>
+        <h1
+          style={{
+            fontSize: "var(--font-size-2xl)",
+            fontWeight: "var(--font-weight-heading)",
+            color: "var(--text-default)",
+          }}
+        >
           Row Selection Grid
         </h1>
-        <p style={{ color: "var(--text-subdued-1)", marginTop: "var(--space-8)" }}>
-          Checkbox column for row selection. Header checkbox selects/deselects all. Shift+Click for range select.
+        <p
+          style={{
+            color: "var(--text-subdued-1)",
+            marginTop: "var(--space-8)",
+          }}
+        >
+          Checkbox column for row selection. Header checkbox selects/deselects
+          all. Shift+Click for range select.
         </p>
       </div>
 
@@ -41,7 +62,7 @@ export default function RowSelectionGridPage() {
         rows={rows}
         rowKeyGetter={(row) => row.id}
         selectedRows={selectedRows}
-        onSelectedRowsChange={setSelectedRows}
+        onSelectedRowsChange={handleSelectedRowsChange}
         renderers={gridRenderers}
         rowHeight={48}
         headerRowHeight={40}
@@ -58,13 +79,19 @@ export default function RowSelectionGridPage() {
           color: "var(--text-default)",
         }}
       >
-        <strong>{selectedRows.size}</strong> row{selectedRows.size !== 1 ? "s" : ""} selected
+        <strong>{selectedRows.size}</strong> row
+        {selectedRows.size !== 1 ? "s" : ""} selected
         {selectedRows.size > 0 && (
-          <span style={{ color: "var(--text-subdued-1)", marginLeft: "var(--space-8)" }}>
+          <span
+            style={{
+              color: "var(--text-subdued-1)",
+              marginLeft: "var(--space-8)",
+            }}
+          >
             (IDs: {[...selectedRows].sort((a, b) => a - b).join(", ")})
           </span>
         )}
       </div>
     </div>
-  )
+  );
 }

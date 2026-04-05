@@ -1,0 +1,17 @@
+{
+  "skill_name": "layout-creator",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need to build an analytics dashboard with KPI cards at the top, a main chart area, and a recent activity list on the side.",
+      "expected_output": "Should recommend Pattern 1 (Dashboard KPI) as primary + Pattern 4 (Split Content) for chart + sidebar. Should specify KPI grid: repeat(auto-fit, minmax(220px, 1fr)), split: 3fr 2fr. Should use existing Card, Table, Badge components from @repo/ui. Should NOT suggest native HTML elements. Should mention all pages render inside AppLayout (left nav + header already present).",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Build a settings page with a sidebar navigation and multiple sections.",
+      "expected_output": "Should recommend Pattern 8 (Sidebar + Content). Should mention existing SidebarNav component at layouts/sidebar-nav.tsx. Should specify split: 240px minmax(0, 1fr). Should use existing @repo/ui components (Tabs, Card, Separator, Input, Button). Should note the page renders inside AppLayout so outer sidebar/header already exists.",
+      "files": []
+    }
+  ]
+}

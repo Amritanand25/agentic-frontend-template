@@ -1,0 +1,9 @@
+# Local Developer Overrides
+
+Copy this file to `CLAUDE.local.md` (gitignored) for personal preferences.
+
+## Example overrides
+
+- Preferred editor: VS Code
+- Skip test coverage checks during prototyping
+- Use verbose logging in development

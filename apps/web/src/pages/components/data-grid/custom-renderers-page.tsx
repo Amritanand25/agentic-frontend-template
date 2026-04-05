@@ -1,8 +1,6 @@
-import { useMemo } from "react"
-import { DataGrid, type Column } from "react-data-grid"
-import "react-data-grid/lib/styles.css"
-import "./data-grid-theme.css"
-import { sampleRows, type Employee } from "./sample-data"
+import { useMemo } from "react";
+import { DataGrid, type Column } from "@repo/ui";
+import { sampleRows, type Employee } from "./sample-data";
 
 function StatusCell({ row }: { row: Employee }) {
   return (
@@ -11,7 +9,7 @@ function StatusCell({ row }: { row: Employee }) {
       {row.status === "idle" && "Idle"}
       {row.status === "error" && "Error"}
     </span>
-  )
+  );
 }
 
 function ProgressCell({ row }: { row: Employee }) {
@@ -22,30 +20,33 @@ function ProgressCell({ row }: { row: Employee }) {
       </div>
       <span className="progress-label">{row.progress}%</span>
     </div>
-  )
+  );
 }
 
 function AvatarCell({ row }: { row: Employee }) {
-  const initials = `${row.firstName[0]}${row.lastName[0]}`
+  const initials = `${row.firstName[0]}${row.lastName[0]}`;
   return (
     <div className="avatar-cell">
       <div className="avatar-circle">{initials}</div>
-      <span>{row.firstName} {row.lastName}</span>
+      <span>
+        {row.firstName} {row.lastName}
+      </span>
     </div>
-  )
+  );
 }
 
 function SalaryCell({ row }: { row: Employee }) {
-  const color = row.salary >= 80000
-    ? "var(--success-50)"
-    : row.salary >= 60000
-    ? "var(--text-default)"
-    : "var(--warning-50)"
+  const color =
+    row.salary >= 80000
+      ? "var(--success-50)"
+      : row.salary >= 60000
+        ? "var(--text-default)"
+        : "var(--warning-50)";
   return (
     <span style={{ fontWeight: "var(--font-weight-prominent)", color }}>
       ${row.salary.toLocaleString()}
     </span>
-  )
+  );
 }
 
 const columns: Column<Employee>[] = [
@@ -76,19 +77,37 @@ const columns: Column<Employee>[] = [
     width: 160,
     renderCell: ({ row }) => <ProgressCell row={row} />,
   },
-]
+];
 
 export default function CustomRenderersGridPage() {
-  const rows = useMemo(() => sampleRows.slice(0, 30), [])
+  const rows = useMemo(() => sampleRows.slice(0, 30), []);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-32)" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "var(--space-32)",
+      }}
+    >
       <div>
-        <h1 style={{ fontSize: "var(--font-size-2xl)", fontWeight: "var(--font-weight-heading)", color: "var(--text-default)" }}>
+        <h1
+          style={{
+            fontSize: "var(--font-size-2xl)",
+            fontWeight: "var(--font-weight-heading)",
+            color: "var(--text-default)",
+          }}
+        >
           Custom Cell Renderers
         </h1>
-        <p style={{ color: "var(--text-subdued-1)", marginTop: "var(--space-8)" }}>
-          Custom renderers for avatars, status badges, progress bars, and color-coded salary cells using design system tokens.
+        <p
+          style={{
+            color: "var(--text-subdued-1)",
+            marginTop: "var(--space-8)",
+          }}
+        >
+          Custom renderers for avatars, status badges, progress bars, and
+          color-coded salary cells using design system tokens.
         </p>
       </div>
 
@@ -101,5 +120,5 @@ export default function CustomRenderersGridPage() {
         className="rdg-theme"
       />
     </div>
-  )
+  );
 }

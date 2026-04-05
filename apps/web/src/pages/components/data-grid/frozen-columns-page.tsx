@@ -1,8 +1,6 @@
-import { useMemo } from "react"
-import { DataGrid, type Column } from "react-data-grid"
-import "react-data-grid/lib/styles.css"
-import "./data-grid-theme.css"
-import { sampleRows, type Employee } from "./sample-data"
+import { useMemo } from "react";
+import { DataGrid, type Column } from "@repo/ui";
+import { sampleRows, type Employee } from "./sample-data";
 
 const columns: Column<Employee>[] = [
   { key: "id", name: "ID", width: 60, frozen: true },
@@ -28,19 +26,37 @@ const columns: Column<Employee>[] = [
     resizable: true,
     renderCell: ({ row }) => `${row.progress}%`,
   },
-]
+];
 
 export default function FrozenColumnsGridPage() {
-  const rows = useMemo(() => sampleRows, [])
+  const rows = useMemo(() => sampleRows, []);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-32)" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "var(--space-32)",
+      }}
+    >
       <div>
-        <h1 style={{ fontSize: "var(--font-size-2xl)", fontWeight: "var(--font-weight-heading)", color: "var(--text-default)" }}>
+        <h1
+          style={{
+            fontSize: "var(--font-size-2xl)",
+            fontWeight: "var(--font-weight-heading)",
+            color: "var(--text-default)",
+          }}
+        >
           Frozen Columns Grid
         </h1>
-        <p style={{ color: "var(--text-subdued-1)", marginTop: "var(--space-8)" }}>
-          ID, First Name, and Last Name columns are frozen (pinned left). Scroll horizontally to see the effect.
+        <p
+          style={{
+            color: "var(--text-subdued-1)",
+            marginTop: "var(--space-8)",
+          }}
+        >
+          ID, First Name, and Last Name columns are frozen (pinned left). Scroll
+          horizontally to see the effect.
         </p>
       </div>
 
@@ -53,5 +69,5 @@ export default function FrozenColumnsGridPage() {
         className="rdg-theme"
       />
     </div>
-  )
+  );
 }

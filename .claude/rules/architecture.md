@@ -1,3 +1,11 @@
+---
+paths:
+  - "apps/**/*"
+  - "packages/**/*"
+  - "turbo.json"
+  - "tsconfig*.json"
+---
+
 # Architecture
 
 > Monorepo tree, tech stack, commands, component workflow, and package security are in CLAUDE.md. This file covers architecture patterns only.

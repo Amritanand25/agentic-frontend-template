@@ -1,8 +1,6 @@
-import { useMemo } from "react"
-import { DataGrid, type ColumnOrColumnGroup } from "react-data-grid"
-import "react-data-grid/lib/styles.css"
-import "./data-grid-theme.css"
-import { sampleRows, type Employee } from "./sample-data"
+import { useMemo } from "react";
+import { DataGrid, type ColumnOrColumnGroup } from "@repo/ui";
+import { sampleRows, type Employee } from "./sample-data";
 
 const columns: ColumnOrColumnGroup<Employee>[] = [
   { key: "id", name: "ID", width: 60 },
@@ -35,19 +33,37 @@ const columns: ColumnOrColumnGroup<Employee>[] = [
       { key: "city", name: "City", resizable: true },
     ],
   },
-]
+];
 
 export default function ColumnGroupingGridPage() {
-  const rows = useMemo(() => sampleRows.slice(0, 30), [])
+  const rows = useMemo(() => sampleRows.slice(0, 30), []);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-32)" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "var(--space-32)",
+      }}
+    >
       <div>
-        <h1 style={{ fontSize: "var(--font-size-2xl)", fontWeight: "var(--font-weight-heading)", color: "var(--text-default)" }}>
+        <h1
+          style={{
+            fontSize: "var(--font-size-2xl)",
+            fontWeight: "var(--font-weight-heading)",
+            color: "var(--text-default)",
+          }}
+        >
           Column Grouping Grid
         </h1>
-        <p style={{ color: "var(--text-subdued-1)", marginTop: "var(--space-8)" }}>
-          Columns grouped under "Personal Info", "Work", and "Location" header groups.
+        <p
+          style={{
+            color: "var(--text-subdued-1)",
+            marginTop: "var(--space-8)",
+          }}
+        >
+          Columns grouped under "Personal Info", "Work", and "Location" header
+          groups.
         </p>
       </div>
 
@@ -60,5 +76,5 @@ export default function ColumnGroupingGridPage() {
         className="rdg-theme"
       />
     </div>
-  )
+  );
 }

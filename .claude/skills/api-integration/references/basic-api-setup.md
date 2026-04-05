@@ -313,7 +313,8 @@ export function UserList() {
 ```tsx
 import { useState } from "react";
 import { useCreateUser } from "../hooks/use-create-user";
-import { Button } from "@repo/ui";
+import { Button, Input } from "@repo/ui";
+import { notify } from "@repo/ui";
 
 export function CreateUserForm() {
   const [name, setName] = useState("");
@@ -326,10 +327,9 @@ export function CreateUserForm() {
       { name, email },
       {
         onSuccess: () => {
-          // Reset form
           setName("");
           setEmail("");
-          alert("User created successfully!");
+          notify({ title: "User created successfully!", variant: "success" });
         },
       },
     );
@@ -337,14 +337,14 @@ export function CreateUserForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <input
+      <Input
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Name"
         required
       />
-      <input
+      <Input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}

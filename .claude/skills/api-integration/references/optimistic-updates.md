@@ -99,6 +99,7 @@ export function useLikePost() {
 ```tsx
 import { Heart } from "lucide-react";
 import { useLikePost } from "../hooks/use-like-post";
+import { Button } from "@repo/ui";
 import { cn } from "@repo/utils";
 
 interface LikeButtonProps {
@@ -121,17 +122,19 @@ export function LikeButton({
   };
 
   return (
-    <button
+    <Button
+      variant="ghost"
+      size="sm"
       onClick={handleClick}
       disabled={isPending}
       className={cn(
-        "flex items-center gap-2 px-3 py-2 rounded-lg transition-colors",
+        "flex items-center gap-2",
         isLiked ? "text-red-500" : "text-grey-60 hover:text-red-500",
       )}
     >
       <Heart className={cn("h-5 w-5", isLiked && "fill-current")} />
       <span>{likesCount}</span>
-    </button>
+    </Button>
   );
 }
 ```

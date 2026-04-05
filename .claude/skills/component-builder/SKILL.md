@@ -5,14 +5,20 @@ description: React component creation with LLD, CVA variants, specs, a11y, and d
 
 # Component Builder
 
-## Step 0: Check Existing First
+## Step 0: MANDATORY — Check Existing First
 
-1. Search `packages/ui/src/` (61+ components)
-2. If close match → modify existing (add variant/prop)
-3. If no match → search for package → `yarn check-pkg`
-4. If no package → create using design tokens
+**NEVER skip this step. NEVER create a component that already exists.**
 
-**During creation:** If the new component needs sub-components (Button, ScrollArea, Input, etc.), search and reuse existing ones from `packages/ui/src/`. Never recreate what already exists.
+1. Read `/.claude/rules/component-catalog.md` (62+ components with all exports listed)
+2. Search `packages/ui/src/` for existing components
+3. If exact match → use it. `import { X } from "@repo/ui"`
+4. If close match → modify existing (add variant/prop). Do NOT create duplicate
+5. If no match → search for npm package → `yarn check-pkg`
+6. If no package → create using design tokens in `packages/ui/src/`
+
+**Native HTML rule:** Inside `packages/ui/src/` (building components), native HTML is allowed but must be styled with design tokens. In `apps/` code, NEVER use native HTML when `@repo/ui` has an equivalent.
+
+**During creation:** If the new component needs sub-components (Button, ScrollArea, Input, etc.), import from `@repo/ui`. Never recreate what exists.
 
 ## Simple vs Complex
 

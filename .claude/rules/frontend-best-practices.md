@@ -1,3 +1,8 @@
+---
+paths:
+  - "apps/web/**/*"
+---
+
 # Frontend Best Practices
 
 > React 19, performance targets, design tokens, security, and testing are in CLAUDE.md and dedicated skills. This file covers patterns NOT covered elsewhere.

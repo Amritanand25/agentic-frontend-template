@@ -1,0 +1,17 @@
+{
+  "skill_name": "spec-creator",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create a spec for a user settings page with profile info, password change, notification preferences, and theme selection.",
+      "expected_output": "Should classify as 'New Page' (large). Should pick layout pattern from layout-creator skill (Pattern 8: Sidebar + Content). Should list existing @repo/ui components to reuse (Input, InputLabel, Button, Select, Switch, Tabs, Card, Separator, Avatar). Should reference design tokens from ui-ux-design skill. Should include 'Components to reuse from @repo/ui' section. Should NOT spec native HTML elements.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Spec a data table for managing team members with columns: avatar, name, email, role, status, actions. Need sorting, filtering, pagination, and bulk actions.",
+      "expected_output": "Should classify as 'New Component' (large/module). Should search packages/ui/src/ and find existing Table, TablePagination, Badge, Avatar, DropdownMenu, Checkbox, Button, FilterPill components. Should spec virtualization for >100 rows. Should include TanStack Query for data fetching with query keys including tenantId. Should NOT propose creating components that already exist.",
+      "files": []
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "skill_name": "ui-ux-design",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need a card component for our dashboard that shows a KPI metric with a title, value, percentage change, and an up/down trend icon. It should have a subtle border and use our design tokens for spacing and colors.",
+      "expected_output": "Should check component-catalog.md first, find existing Card component from @repo/ui, and compose it using Card, CardHeader, CardContent with design tokens (var(--primary-50), var(--space-16), etc.). Should use Lucide React icons (TrendingUp, TrendingDown). Should NOT create a new card component from scratch. Should NOT use hardcoded hex colors or px values.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Create a form with name, email, date of birth, and role selection fields. The role should be a dropdown with options: Admin, Editor, Viewer. Include proper labels and validation error states.",
+      "expected_output": "Should use existing @repo/ui components: InputLabel for text fields, DatePicker for DOB (NOT input[type=date]), Dropdown or Select for role selection (NOT native <select>), Button for submit. All styled with design tokens. Should use Form + FormField for validation. Should NOT use native HTML form elements.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Design a notification banner that appears at the top of the page with success, warning, and error variants. It should have a dismiss button and an optional action button.",
+      "expected_output": "Should check component-catalog.md first and find existing Banner component from @repo/ui with variants (primary, success, error, warning, neutral). Should use it directly rather than creating a new banner. Should also mention notify() for toast-style notifications. Should NOT create a custom banner div with hardcoded styles.",
+      "files": []
+    }
+  ]
+}

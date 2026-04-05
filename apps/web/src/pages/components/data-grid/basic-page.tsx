@@ -1,8 +1,6 @@
-import { useMemo } from "react"
-import { DataGrid, type Column } from "react-data-grid"
-import "react-data-grid/lib/styles.css"
-import "./data-grid-theme.css"
-import { sampleRows, type Employee } from "./sample-data"
+import { useMemo } from "react";
+import { DataGrid, type Column } from "@repo/ui";
+import { sampleRows, type Employee } from "./sample-data";
 
 const columns: Column<Employee>[] = [
   { key: "id", name: "ID", width: 60, resizable: true },
@@ -13,19 +11,37 @@ const columns: Column<Employee>[] = [
   { key: "role", name: "Role", resizable: true },
   { key: "country", name: "Country", resizable: true },
   { key: "city", name: "City", resizable: true },
-]
+];
 
 export default function BasicGridPage() {
-  const rows = useMemo(() => sampleRows, [])
+  const rows = useMemo(() => sampleRows, []);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-32)" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "var(--space-32)",
+      }}
+    >
       <div>
-        <h1 style={{ fontSize: "var(--font-size-2xl)", fontWeight: "var(--font-weight-heading)", color: "var(--text-default)" }}>
+        <h1
+          style={{
+            fontSize: "var(--font-size-2xl)",
+            fontWeight: "var(--font-weight-heading)",
+            color: "var(--text-default)",
+          }}
+        >
           Basic Grid
         </h1>
-        <p style={{ color: "var(--text-subdued-1)", marginTop: "var(--space-8)" }}>
-          Simple read-only data grid with resizable columns and virtual scrolling. Renders 50 rows efficiently.
+        <p
+          style={{
+            color: "var(--text-subdued-1)",
+            marginTop: "var(--space-8)",
+          }}
+        >
+          Simple read-only data grid with resizable columns and virtual
+          scrolling. Renders 50 rows efficiently.
         </p>
       </div>
 
@@ -38,5 +54,5 @@ export default function BasicGridPage() {
         className="rdg-theme"
       />
     </div>
-  )
+  );
 }

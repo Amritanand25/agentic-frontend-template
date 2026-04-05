@@ -5,20 +5,15 @@ import {
   type SortColumn,
   SelectColumn,
   type RenderCellProps,
-  type Renderers,
-  type RenderCheckboxProps,
-  type RenderSortStatusProps,
-} from "react-data-grid";
-import "react-data-grid/lib/styles.css";
+  gridRenderers,
+  Badge,
+} from "@repo/ui";
 import "./data-grid-theme.css";
-import { Badge, Checkbox } from "@repo/ui";
 import {
   ExternalLink,
   Mail,
   Check,
   Minus,
-  ArrowDown,
-  ArrowUp,
   Plus,
   Type,
   Hash,
@@ -308,84 +303,6 @@ function renderCellByType(field: Field, value: unknown) {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Custom renderers for checkbox + sort icons                         */
-/* ------------------------------------------------------------------ */
-
-function renderCheckbox({
-  onChange,
-  indeterminate,
-  ...props
-}: RenderCheckboxProps) {
-  const checked = indeterminate
-    ? ("indeterminate" as const)
-    : (props.checked ?? false);
-  return (
-    <Checkbox
-      {...props}
-      checked={checked}
-      onCheckedChange={(val) => {
-        onChange(val === true, false);
-      }}
-    />
-  );
-}
-
-function renderSortStatus({ sortDirection, priority }: RenderSortStatusProps) {
-  return (
-    <span
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 1,
-        marginLeft: "var(--space-4)",
-        verticalAlign: "middle",
-      }}
-    >
-      <ArrowDown
-        size={13}
-        strokeWidth={2.2}
-        style={{
-          color:
-            sortDirection === "DESC"
-              ? "var(--text-default)"
-              : "var(--text-subdued-2)",
-          transition: "color 150ms ease",
-          display: "block",
-        }}
-      />
-      <ArrowUp
-        size={13}
-        strokeWidth={2.2}
-        style={{
-          color:
-            sortDirection === "ASC"
-              ? "var(--text-default)"
-              : "var(--text-subdued-2)",
-          transition: "color 150ms ease",
-          display: "block",
-        }}
-      />
-      {priority !== undefined && (
-        <span
-          style={{
-            fontSize: "var(--font-size-xs, 11px)",
-            color: "var(--text-subdued-2)",
-            marginLeft: 2,
-          }}
-        >
-          {priority}
-        </span>
-      )}
-    </span>
-  );
-}
-
-const gridRenderers: Renderers<GridRow, unknown> = {
-  renderCheckbox,
-  renderSortStatus,
-};
-
-/* ------------------------------------------------------------------ */
 /*  Column width heuristics per field type                             */
 /* ------------------------------------------------------------------ */
 
@@ -424,9 +341,12 @@ export function DataTable({
   height = "calc(100vh - 160px)",
   onAddColumn,
 }: DataTableProps) {
-  const [selectedRows, setSelectedRows] = useState<ReadonlySet<string>>(
+  const [selectedRows, setSelectedRows] = useState<Set<string>>(
     () => new Set(),
   );
+  const handleSelectedRowsChange = (rows: Set<React.Key>) => {
+    setSelectedRows(rows as unknown as Set<string>);
+  };
   const [sortColumns, setSortColumns] = useState<readonly SortColumn[]>([]);
   const [addColumnOpen, setAddColumnOpen] = useState(false);
   const addColumnRef = useRef<HTMLDivElement>(null);
@@ -589,7 +509,7 @@ export function DataTable({
           rows={sortedRows}
           rowKeyGetter={(row: GridRow) => row.__id}
           selectedRows={selectedRows}
-          onSelectedRowsChange={setSelectedRows}
+          onSelectedRowsChange={handleSelectedRowsChange}
           sortColumns={sortColumns}
           onSortColumnsChange={setSortColumns}
           renderers={gridRenderers}

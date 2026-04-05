@@ -18,6 +18,10 @@
           {
             "type": "command",
             "command": ".claude/hooks/prettier-format.sh"
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/native-html-check.sh"
           }
         ]
       }
@@ -35,10 +39,48 @@
           }
         ]
       }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/design-system-reminder.sh"
+          }
+        ]
+      }
     ]
   },
   "permissions": {
-    "allow": []
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Bash(yarn lint*)",
+      "Bash(yarn format*)",
+      "Bash(yarn test*)",
+      "Bash(yarn build*)",
+      "Bash(yarn check-pkg*)",
+      "Bash(npx tsc*)",
+      "Bash(npx prettier*)",
+      "Bash(ls *)"
+    ]
+  },
+  "autoMode": {
+    "environment": ["Trusted frontend monorepo with design system"],
+    "allow": [
+      "Allow yarn install when package.json changes",
+      "Allow component creation in packages/ui/src/",
+      "Allow test file creation in __tests__/ directories",
+      "Allow reading all project files"
+    ],
+    "soft_deny": [
+      "Block git force push",
+      "Block deleting packages/ui/src/ components without confirmation"
+    ]
+  },
+  "worktree": {
+    "symlinkDirectories": ["node_modules", ".yarn"]
   },
   "disabledMcpjsonServers": ["shadcn"]
 }

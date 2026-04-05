@@ -1,91 +1,107 @@
+---
+paths:
+  - "apps/**/*.tsx"
+  - "apps/**/*.ts"
+  - "packages/ui/**/*.tsx"
+---
+
 # Component Catalog — `@repo/ui`
 
-> **MANDATORY**: Before creating ANY UI element, check this catalog. All components below are available via `import { ComponentName } from "@repo/ui"`. NEVER use native HTML (`<input>`, `<select>`, `<table>`, `<button>`, `<label>`, `<hr>`, `<textarea>`) when an equivalent exists here.
+> **MANDATORY**: Before creating ANY UI element, check this catalog first. All components below are available via `import { ComponentName } from "@repo/ui"`.
+>
+> **RULE**: In `apps/` code, NEVER use native HTML (`<input>`, `<select>`, `<table>`, `<button>`, `<label>`, `<hr>`, `<textarea>`, `<input type="date">`, `<input type="time">`) when an equivalent exists here. Inside `packages/ui/src/` (building components), native HTML is allowed but must use design tokens from `packages/theme/src/tokens.css`.
+>
+> **SCROLLING RULE**: NEVER use `overflow-auto`, `overflow-scroll`, `overflow-y-auto`, or any native CSS scroll — ALWAYS use `ScrollArea` from `@repo/ui`. This applies everywhere: `apps/` AND `packages/ui/src/`.
+>
+> **If unsure**: Grep `packages/ui/src/` to verify. This catalog is the source of truth.
 
 ## Quick Lookup by Use Case
 
-| Need                    | Use Component                     | NOT this                    |
-| ----------------------- | --------------------------------- | --------------------------- |
-| Button / CTA            | `Button`                          | `<button>`                  |
-| Text input              | `Input`                           | `<input type="text">`       |
-| Labeled input           | `InputLabel`                      | `<label>` + `<input>`       |
-| Textarea                | `Textarea`                        | `<textarea>`                |
-| Select dropdown         | `Select` + parts                  | `<select>` / `<option>`     |
-| Rich dropdown           | `Dropdown`                        | custom dropdown             |
-| Checkbox                | `Checkbox`                        | `<input type="checkbox">`   |
-| Radio buttons           | `RadioGroup` + `RadioGroupItem`   | `<input type="radio">`      |
-| Toggle / Switch         | `Switch`                          | custom toggle               |
-| Date picker             | `DatePicker`                      | `<input type="date">`       |
-| Time picker             | `TimePicker`                      | `<input type="time">`       |
-| Calendar                | `Calendar`                        | custom calendar             |
-| Modal / Dialog          | `Dialog` + parts                  | custom modal / portal       |
-| Confirmation dialog     | `AlertDialog` + parts             | `window.confirm()`          |
-| Side panel              | `Sheet` + parts                   | custom side drawer          |
-| Bottom drawer           | `Drawer` + parts                  | custom bottom sheet         |
-| Dropdown menu           | `DropdownMenu` + parts            | custom dropdown             |
-| Context menu            | `ContextMenu` + parts             | custom right-click menu     |
-| Table                   | `Table` + parts                   | `<table>` / `<tr>` / `<td>` |
-| Table pagination        | `TablePagination`                 | custom pagination           |
-| Pagination              | `Pagination` + parts              | custom pagination           |
-| Tabs                    | `Tabs` + parts                    | custom tabs                 |
-| Accordion               | `Accordion` + parts               | custom collapsible          |
-| Collapsible             | `Collapsible` + parts             | custom show/hide            |
-| Tooltip                 | `Tooltip` + parts                 | `title` attribute           |
-| Hover card              | `HoverCard` + parts               | custom hover popover        |
-| Popover                 | `Popover` + parts                 | custom floating panel       |
-| Toast / Notification    | `notify()` / `notifyPromise()`    | `alert()` / custom toast    |
-| Form with validation    | `Form` + `FormField` + parts      | raw `<form>`                |
-| Label                   | `Label`                           | `<label>`                   |
-| Card                    | `Card` + parts                    | custom card `<div>`         |
-| Badge                   | `Badge`                           | custom chip / tag           |
-| Avatar                  | `Avatar` + parts                  | custom avatar `<img>`       |
-| Alert / Banner          | `Alert` + parts / `Banner`        | custom alert div            |
-| Progress bar            | `Progress` / `ProgressBar`        | custom progress div         |
-| Stepper                 | `ProgressStepper` / `StepperFlow` | custom stepper              |
-| Skeleton loader         | `Skeleton`                        | custom loading placeholder  |
-| Spinner                 | `Spinner`                         | custom loading spinner      |
-| Breadcrumb              | `Breadcrumb` + parts              | custom breadcrumb nav       |
-| Separator               | `Separator`                       | `<hr>`                      |
-| Scroll area             | `ScrollArea` + `ScrollBar`        | custom scrollable div       |
-| Slider / Range          | `Slider`                          | `<input type="range">`      |
-| Toggle button           | `Toggle`                          | custom toggle button        |
-| Toggle group            | `ToggleGroup` + `ToggleGroupItem` | custom button group         |
-| Menu bar                | `Menubar` + parts                 | custom app menu             |
-| Navigation menu         | `NavigationMenu` + parts          | custom nav                  |
-| Command palette         | `Command` + parts                 | custom search/command UI    |
-| Carousel                | `Carousel` + parts                | custom slider               |
-| Charts                  | `ChartContainer` + chart parts    | raw recharts                |
-| Resizable panels        | `ResizablePanelGroup` + parts     | custom resize handles       |
-| OTP input               | `InputOTP` + parts                | multiple char inputs        |
-| File upload             | `FileUpload`                      | custom file input           |
-| Filter pill / chip      | `FilterPill`                      | custom filter chip          |
-| Empty state             | `EmptyState`                      | custom empty placeholder    |
-| Error state             | `ErrorState`                      | custom error placeholder    |
-| Swipe button            | `SwipeButton`                     | custom swipe-to-confirm     |
-| Title bar / Page header | `TitleBar`                        | custom page header          |
-| Aspect ratio container  | `AspectRatio`                     | custom aspect-ratio hack    |
+| Need                    | Use Component                     | NOT this                                             |
+| ----------------------- | --------------------------------- | ---------------------------------------------------- |
+| Button / CTA            | `Button`                          | `<button>`                                           |
+| Text input              | `Input`                           | `<input type="text">`                                |
+| Labeled input           | `InputLabel`                      | `<label>` + `<input>`                                |
+| Textarea                | `Textarea`                        | `<textarea>`                                         |
+| Select dropdown         | `Select` + parts                  | `<select>` / `<option>`                              |
+| Rich dropdown           | `Dropdown`                        | custom dropdown                                      |
+| Checkbox                | `Checkbox`                        | `<input type="checkbox">`                            |
+| Radio buttons           | `RadioGroup` + `RadioGroupItem`   | `<input type="radio">`                               |
+| Toggle / Switch         | `Switch`                          | custom toggle                                        |
+| Date picker             | `DatePicker`                      | `<input type="date">`                                |
+| Time picker             | `TimePicker`                      | `<input type="time">`                                |
+| Calendar                | `Calendar`                        | custom calendar                                      |
+| Modal / Dialog          | `Dialog` + parts                  | custom modal / portal                                |
+| Confirmation dialog     | `AlertDialog` + parts             | `window.confirm()`                                   |
+| Side panel              | `Sheet` + parts                   | custom side drawer                                   |
+| Bottom drawer           | `Drawer` + parts                  | custom bottom sheet                                  |
+| Dropdown menu           | `DropdownMenu` + parts            | custom dropdown                                      |
+| Context menu            | `ContextMenu` + parts             | custom right-click menu                              |
+| **Data table (ALL)**    | **`DataGrid`** / `TreeDataGrid`   | `Table` is BANNED in apps/                           |
+| Table pagination        | `TablePagination`                 | custom pagination                                    |
+| Pagination              | `Pagination` + parts              | custom pagination                                    |
+| Tabs                    | `Tabs` + parts                    | custom tabs                                          |
+| Accordion               | `Accordion` + parts               | custom collapsible                                   |
+| Collapsible             | `Collapsible` + parts             | custom show/hide                                     |
+| Tooltip                 | `Tooltip` + parts                 | `title` attribute                                    |
+| Hover card              | `HoverCard` + parts               | custom hover popover                                 |
+| Popover                 | `Popover` + parts                 | custom floating panel                                |
+| Toast / Notification    | `notify()` / `notifyPromise()`    | `alert()` / custom toast                             |
+| Form with validation    | `Form` + `FormField` + parts      | raw `<form>`                                         |
+| Label                   | `Label`                           | `<label>`                                            |
+| Card                    | `Card` + parts                    | custom card `<div>`                                  |
+| Badge                   | `Badge`                           | custom chip / tag                                    |
+| Avatar                  | `Avatar` + parts                  | custom avatar `<img>`                                |
+| Alert / Banner          | `Alert` + parts / `Banner`        | custom alert div                                     |
+| Progress bar            | `Progress` / `ProgressBar`        | custom progress div                                  |
+| Stepper                 | `ProgressStepper` / `StepperFlow` | custom stepper                                       |
+| Skeleton loader         | `Skeleton`                        | custom loading placeholder                           |
+| Spinner                 | `Spinner`                         | custom loading spinner                               |
+| Breadcrumb              | `Breadcrumb` + parts              | custom breadcrumb nav                                |
+| Separator               | `Separator`                       | `<hr>`                                               |
+| **Scroll area (ALL)**   | **`ScrollArea`** + `ScrollBar`    | `overflow-auto` is BANNED                            |
+| Slider / Range          | `Slider`                          | `<input type="range">`                               |
+| Toggle button           | `Toggle`                          | custom toggle button                                 |
+| Toggle group            | `ToggleGroup` + `ToggleGroupItem` | custom button group                                  |
+| Menu bar                | `Menubar` + parts                 | custom app menu                                      |
+| Navigation menu         | `NavigationMenu` + parts          | custom nav                                           |
+| Command palette         | `Command` + parts                 | custom search/command UI                             |
+| Carousel                | `Carousel` + parts                | custom slider                                        |
+| Charts                  | `ChartContainer` + chart parts    | raw recharts                                         |
+| Resizable panels        | `ResizablePanelGroup` + parts     | custom resize handles                                |
+| OTP input               | `InputOTP` + parts                | multiple char inputs                                 |
+| File upload             | `FileUpload`                      | custom file input                                    |
+| Filter pill / chip      | `FilterPill`                      | custom filter chip                                   |
+| Empty state             | `EmptyState`                      | custom empty placeholder                             |
+| Error state             | `ErrorState`                      | custom error placeholder                             |
+| Swipe button            | `SwipeButton`                     | custom swipe-to-confirm                              |
+| Title bar / Page header | `TitleBar`                        | custom page header                                   |
+| Aspect ratio container  | `AspectRatio`                     | custom aspect-ratio hack                             |
+| Sidebar / App nav       | `Sidebar` + `SidebarProvider`     | custom sidebar layout                                |
+| **Search input (ALL)**  | **`SearchBar`**                   | plain `Input` with "Search..." placeholder is BANNED |
 
 ---
 
-## All Components (62 files, all exports)
+## All Components (66 files, all exports)
 
 All imports: `import { ComponentName } from "@repo/ui"`
 
 ### Forms & Inputs
 
-| Component      | Exports                                                                                                       | Variants / Props                                                                                |
-| -------------- | ------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| **Button**     | `Button`, `buttonVariants`, `ButtonProps`                                                                     | variant: `default\|destructive\|outline\|secondary\|ghost\|link`, size: `default\|sm\|lg\|icon` |
-| **Input**      | `Input`                                                                                                       | All `<input>` HTML attributes                                                                   |
-| **InputLabel** | `InputLabel`, `InputLabelProps`                                                                               | `required`, `helperText`, `disabled`                                                            |
-| **Textarea**   | `Textarea`                                                                                                    | All `<textarea>` HTML attributes                                                                |
-| **Label**      | `Label`                                                                                                       | Radix Label attributes                                                                          |
-| **Checkbox**   | `Checkbox`                                                                                                    | `checked`, `onCheckedChange`, `disabled`                                                        |
-| **RadioGroup** | `RadioGroup`, `RadioGroupItem`                                                                                | `value`, `onValueChange`                                                                        |
-| **Switch**     | `Switch`                                                                                                      | `checked`, `onCheckedChange`                                                                    |
-| **Slider**     | `Slider`                                                                                                      | `value`, `onValueChange`, `min`, `max`, `step`                                                  |
-| **InputOTP**   | `InputOTP`, `InputOTPGroup`, `InputOTPSlot`, `InputOTPSeparator`                                              | `maxLength`, `value`, `onChange`                                                                |
-| **Form**       | `Form`, `FormField`, `FormItem`, `FormLabel`, `FormControl`, `FormDescription`, `FormMessage`, `useFormField` | React Hook Form + Zod integration                                                               |
+| Component      | Exports                                                                                                       | Variants / Props                                                                                                                   |
+| -------------- | ------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| **Button**     | `Button`, `buttonVariants`, `ButtonProps`                                                                     | variant: `default\|destructive\|outline\|secondary\|ghost\|link`, size: `default\|sm\|lg\|icon`                                    |
+| **Input**      | `Input`                                                                                                       | All `<input>` HTML attributes                                                                                                      |
+| **InputLabel** | `InputLabel`, `InputLabelProps`                                                                               | `required`, `helperText`, `disabled`                                                                                               |
+| **Textarea**   | `Textarea`                                                                                                    | All `<textarea>` HTML attributes                                                                                                   |
+| **Label**      | `Label`                                                                                                       | Radix Label attributes                                                                                                             |
+| **Checkbox**   | `Checkbox`                                                                                                    | `checked`, `onCheckedChange`, `disabled`                                                                                           |
+| **RadioGroup** | `RadioGroup`, `RadioGroupItem`                                                                                | `value`, `onValueChange`                                                                                                           |
+| **Switch**     | `Switch`                                                                                                      | `checked`, `onCheckedChange`                                                                                                       |
+| **Slider**     | `Slider`                                                                                                      | `value`, `onValueChange`, `min`, `max`, `step`                                                                                     |
+| **InputOTP**   | `InputOTP`, `InputOTPGroup`, `InputOTPSlot`, `InputOTPSeparator`                                              | `maxLength`, `value`, `onChange`                                                                                                   |
+| **SearchBar**  | `SearchBar`, `SearchBarProps`                                                                                 | `value`, `onChange`, `onClear`, `placeholder`. Built-in search icon + clear button. ALWAYS use instead of plain `Input` for search |
+| **Form**       | `Form`, `FormField`, `FormItem`, `FormLabel`, `FormControl`, `FormDescription`, `FormMessage`, `useFormField` | React Hook Form + Zod integration                                                                                                  |
 
 ### Select & Dropdown
 
@@ -118,13 +134,14 @@ All imports: `import { ComponentName } from "@repo/ui"`
 
 ### Data Display
 
-| Component           | Exports                                                                                                  | Props                                               |
-| ------------------- | -------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| **Table**           | `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableHead`, `TableRow`, `TableCell`, `TableCaption` | Standard table parts                                |
-| **TablePagination** | `TablePagination`                                                                                        | `totalRows`, `page`, `rowsPerPage`, `onPageChange`  |
-| **Card**            | `Card`, `CardHeader`, `CardFooter`, `CardTitle`, `CardDescription`, `CardContent`                        | Composable card parts                               |
-| **Badge**           | `Badge`, `badgeVariants`                                                                                 | variant: `default\|secondary\|destructive\|outline` |
-| **Avatar**          | `Avatar`, `AvatarImage`, `AvatarFallback`                                                                | `src`, `alt`, fallback text                         |
+| Component           | Exports                                                                                                  | Props                                                                                                                                                                                                                                                                                                                                                                                                |
+| ------------------- | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Table**           | `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableHead`, `TableRow`, `TableCell`, `TableCaption` | Standard table parts                                                                                                                                                                                                                                                                                                                                                                                 |
+| **DataGrid**        | `DataGrid`, `TreeDataGrid`, `SelectColumn`, `gridRenderers`, `renderTextEditor`, `CellWithTooltip`       | Themed react-data-grid wrapper with virtual scrolling, sorting, selection, editing, frozen columns, tree grouping, horizontal scroll. Auto-applies `rdg-theme` class. **`CellWithTooltip`**: wrap cell text to truncate with ellipsis and show tooltip on hover. Types: `Column`, `ColumnOrColumnGroup`, `SortColumn`, `RenderCellProps`, `RenderEditCellProps`, `RenderGroupCellProps`, `Renderers` |
+| **TablePagination** | `TablePagination`                                                                                        | `totalRows`, `page`, `rowsPerPage`, `onPageChange`                                                                                                                                                                                                                                                                                                                                                   |
+| **Card**            | `Card`, `CardHeader`, `CardFooter`, `CardTitle`, `CardDescription`, `CardContent`                        | Composable card parts                                                                                                                                                                                                                                                                                                                                                                                |
+| **Badge**           | `Badge`, `badgeVariants`                                                                                 | variant: `default\|secondary\|destructive\|outline`                                                                                                                                                                                                                                                                                                                                                  |
+| **Avatar**          | `Avatar`, `AvatarImage`, `AvatarFallback`                                                                | `src`, `alt`, fallback text                                                                                                                                                                                                                                                                                                                                                                          |
 
 ### Navigation
 
@@ -158,13 +175,14 @@ All imports: `import { ComponentName } from "@repo/ui"`
 
 ### Layout & Containers
 
-| Component           | Exports                                                                           | Props                               |
-| ------------------- | --------------------------------------------------------------------------------- | ----------------------------------- |
-| **Separator**       | `Separator`                                                                       | orientation: `horizontal\|vertical` |
-| **ScrollArea**      | `ScrollArea`, `ScrollBar`                                                         | orientation: `vertical\|horizontal` |
-| **ResizablePanels** | `ResizablePanelGroup`, `ResizablePanel`, `ResizableHandle`                        | direction: `horizontal\|vertical`   |
-| **AspectRatio**     | `AspectRatio`                                                                     | `ratio` (e.g. `16/9`)               |
-| **Carousel**        | `Carousel`, `CarouselContent`, `CarouselItem`, `CarouselPrevious`, `CarouselNext` | Slide container                     |
+| Component           | Exports                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Props                                                                                          |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Separator**       | `Separator`                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | orientation: `horizontal\|vertical`                                                            |
+| **ScrollArea**      | `ScrollArea`, `ScrollBar`                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | orientation: `vertical\|horizontal`                                                            |
+| **ResizablePanels** | `ResizablePanelGroup`, `ResizablePanel`, `ResizableHandle`                                                                                                                                                                                                                                                                                                                                                                                                                                | direction: `horizontal\|vertical`                                                              |
+| **AspectRatio**     | `AspectRatio`                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | `ratio` (e.g. `16/9`)                                                                          |
+| **Carousel**        | `Carousel`, `CarouselContent`, `CarouselItem`, `CarouselPrevious`, `CarouselNext`                                                                                                                                                                                                                                                                                                                                                                                                         | Slide container                                                                                |
+| **Sidebar**         | `SidebarProvider`, `Sidebar`, `SidebarTrigger`, `SidebarInset`, `SidebarHeader`, `SidebarContent`, `SidebarFooter`, `SidebarGroup`, `SidebarGroupLabel`, `SidebarGroupAction`, `SidebarGroupContent`, `SidebarMenu`, `SidebarMenuItem`, `SidebarMenuButton`, `SidebarMenuAction`, `SidebarMenuBadge`, `SidebarMenuSkeleton`, `SidebarMenuSub`, `SidebarMenuSubItem`, `SidebarMenuSubButton`, `SidebarRail`, `SidebarSeparator`, `SidebarInput`, `useSidebar`, `sidebarMenuButtonVariants` | variant: `sidebar\|floating\|inset`, side: `left\|right`, collapsible: `offcanvas\|icon\|none` |
 
 ### Charts
 
@@ -183,6 +201,14 @@ All imports: `import { ComponentName } from "@repo/ui"`
 | **SwipeButton** | `SwipeButton`, `SwipeButtonProps`                   | variant: `primary\|secondary\|tertiary`, `onConfirm`                                   |
 | **TitleBar**    | `TitleBar`, `TitleBarProps`                         | `title`, `subtitle`, `onBack`, `actions`, `sticky`                                     |
 
+### Notifications (Custom)
+
+| Component             | Exports                                                               | Props                                                                                  |
+| --------------------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| **NotificationNudge** | `notify`, `notifyPromise`, `NotificationToast`, `NotificationOptions` | variant: `info\|success\|error\|loading`, `showProgressBar`, `showActions`, `duration` |
+
+> Note: `notify()` and `notifyPromise()` are function calls, not JSX. Use `notify({ title: "...", variant: "success" })` to show toast notifications. Requires `<Toaster />` in app root.
+
 ---
 
-**Total: 62 component files | All via `import { ... } from "@repo/ui"`**
+**Total: 65 component files | All via `import { ... } from "@repo/ui"`**

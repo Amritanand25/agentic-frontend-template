@@ -1,26 +1,27 @@
-import { useState, useMemo } from "react"
-import { DataGrid, type Column } from "react-data-grid"
-import { Pencil, Check, X } from "lucide-react"
-import "react-data-grid/lib/styles.css"
-import "./data-grid-theme.css"
-import { sampleRows, type Employee } from "./sample-data"
+import { useState, useMemo } from "react";
+import { DataGrid, type Column } from "@repo/ui";
+import { Pencil, Check, X } from "lucide-react";
+import { sampleRows, type Employee } from "./sample-data";
 
-type Permission = "admin" | "editor" | "viewer"
+type Permission = "admin" | "editor" | "viewer";
 
-const permissionConfig: Record<Permission, { canEdit: boolean; label: string }> = {
+const permissionConfig: Record<
+  Permission,
+  { canEdit: boolean; label: string }
+> = {
   admin: { canEdit: true, label: "Admin" },
   editor: { canEdit: true, label: "Editor" },
   viewer: { canEdit: false, label: "Viewer" },
-}
+};
 
 function InlineInput({
   value,
   onChange,
   placeholder,
 }: {
-  value: string
-  onChange: (val: string) => void
-  placeholder?: string
+  value: string;
+  onChange: (val: string) => void;
+  placeholder?: string;
 }) {
   return (
     <input
@@ -30,37 +31,40 @@ function InlineInput({
       placeholder={placeholder}
       autoFocus={false}
     />
-  )
+  );
 }
 
 export default function RowEditModePage() {
-  const [rows, setRows] = useState(() => sampleRows.slice(0, 15))
-  const [editingRowId, setEditingRowId] = useState<number | null>(null)
-  const [editDraft, setEditDraft] = useState<Employee | null>(null)
-  const [permission, setPermission] = useState<Permission>("admin")
+  const [rows, setRows] = useState(() => sampleRows.slice(0, 15));
+  const [editingRowId, setEditingRowId] = useState<number | null>(null);
+  const [editDraft, setEditDraft] = useState<Employee | null>(null);
+  const [permission, setPermission] = useState<Permission>("admin");
 
-  const canEdit = permissionConfig[permission].canEdit
+  const canEdit = permissionConfig[permission].canEdit;
 
   function startEdit(row: Employee) {
-    setEditingRowId(row.id)
-    setEditDraft({ ...row })
+    setEditingRowId(row.id);
+    setEditDraft({ ...row });
   }
 
   function cancelEdit() {
-    setEditingRowId(null)
-    setEditDraft(null)
+    setEditingRowId(null);
+    setEditDraft(null);
   }
 
   function saveEdit() {
-    if (!editDraft) return
-    setRows((prev) => prev.map((r) => (r.id === editDraft.id ? editDraft : r)))
-    setEditingRowId(null)
-    setEditDraft(null)
+    if (!editDraft) return;
+    setRows((prev) => prev.map((r) => (r.id === editDraft.id ? editDraft : r)));
+    setEditingRowId(null);
+    setEditDraft(null);
   }
 
   function updateDraft(key: keyof Employee, value: string) {
-    if (!editDraft) return
-    setEditDraft({ ...editDraft, [key]: key === "salary" ? Number(value) || 0 : value })
+    if (!editDraft) return;
+    setEditDraft({
+      ...editDraft,
+      [key]: key === "salary" ? Number(value) || 0 : value,
+    });
   }
 
   const columns: Column<Employee>[] = useMemo(
@@ -72,19 +76,33 @@ export default function RowEditModePage() {
         minWidth: 80,
         maxWidth: 80,
         renderCell: ({ row }) => {
-          if (!canEdit) return null
+          if (!canEdit) return null;
 
           if (editingRowId === row.id) {
             return (
-              <div style={{ display: "flex", alignItems: "center", gap: "var(--space-4)" }}>
-                <button className="row-edit-action-btn row-edit-save" onClick={saveEdit} title="Save">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "var(--space-4)",
+                }}
+              >
+                <button
+                  className="row-edit-action-btn row-edit-save"
+                  onClick={saveEdit}
+                  title="Save"
+                >
                   <Check size={15} />
                 </button>
-                <button className="row-edit-action-btn row-edit-cancel" onClick={cancelEdit} title="Cancel">
+                <button
+                  className="row-edit-action-btn row-edit-cancel"
+                  onClick={cancelEdit}
+                  title="Cancel"
+                >
                   <X size={15} />
                 </button>
               </div>
-            )
+            );
           }
 
           return (
@@ -96,7 +114,7 @@ export default function RowEditModePage() {
             >
               <Pencil size={14} />
             </button>
-          )
+          );
         },
       },
       {
@@ -109,9 +127,15 @@ export default function RowEditModePage() {
         name: "First Name",
         renderCell: ({ row }) => {
           if (editingRowId === row.id && editDraft) {
-            return <InlineInput value={editDraft.firstName} onChange={(v) => updateDraft("firstName", v)} placeholder="First name" />
+            return (
+              <InlineInput
+                value={editDraft.firstName}
+                onChange={(v) => updateDraft("firstName", v)}
+                placeholder="First name"
+              />
+            );
           }
-          return row.firstName
+          return row.firstName;
         },
       },
       {
@@ -119,9 +143,15 @@ export default function RowEditModePage() {
         name: "Last Name",
         renderCell: ({ row }) => {
           if (editingRowId === row.id && editDraft) {
-            return <InlineInput value={editDraft.lastName} onChange={(v) => updateDraft("lastName", v)} placeholder="Last name" />
+            return (
+              <InlineInput
+                value={editDraft.lastName}
+                onChange={(v) => updateDraft("lastName", v)}
+                placeholder="Last name"
+              />
+            );
           }
-          return row.lastName
+          return row.lastName;
         },
       },
       {
@@ -130,9 +160,15 @@ export default function RowEditModePage() {
         width: 220,
         renderCell: ({ row }) => {
           if (editingRowId === row.id && editDraft) {
-            return <InlineInput value={editDraft.email} onChange={(v) => updateDraft("email", v)} placeholder="Email" />
+            return (
+              <InlineInput
+                value={editDraft.email}
+                onChange={(v) => updateDraft("email", v)}
+                placeholder="Email"
+              />
+            );
           }
-          return row.email
+          return row.email;
         },
       },
       {
@@ -140,9 +176,15 @@ export default function RowEditModePage() {
         name: "Department",
         renderCell: ({ row }) => {
           if (editingRowId === row.id && editDraft) {
-            return <InlineInput value={editDraft.department} onChange={(v) => updateDraft("department", v)} placeholder="Department" />
+            return (
+              <InlineInput
+                value={editDraft.department}
+                onChange={(v) => updateDraft("department", v)}
+                placeholder="Department"
+              />
+            );
           }
-          return row.department
+          return row.department;
         },
       },
       {
@@ -150,9 +192,15 @@ export default function RowEditModePage() {
         name: "Role",
         renderCell: ({ row }) => {
           if (editingRowId === row.id && editDraft) {
-            return <InlineInput value={editDraft.role} onChange={(v) => updateDraft("role", v)} placeholder="Role" />
+            return (
+              <InlineInput
+                value={editDraft.role}
+                onChange={(v) => updateDraft("role", v)}
+                placeholder="Role"
+              />
+            );
           }
-          return row.role
+          return row.role;
         },
       },
       {
@@ -161,23 +209,48 @@ export default function RowEditModePage() {
         width: 120,
         renderCell: ({ row }) => {
           if (editingRowId === row.id && editDraft) {
-            return <InlineInput value={String(editDraft.salary)} onChange={(v) => updateDraft("salary", v)} placeholder="Salary" />
+            return (
+              <InlineInput
+                value={String(editDraft.salary)}
+                onChange={(v) => updateDraft("salary", v)}
+                placeholder="Salary"
+              />
+            );
           }
-          return `$${row.salary.toLocaleString()}`
+          return `$${row.salary.toLocaleString()}`;
         },
       },
     ],
-    [editingRowId, editDraft, canEdit]
-  )
+    [editingRowId, editDraft, canEdit],
+  );
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-32)" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "var(--space-32)",
+      }}
+    >
       <div>
-        <h1 style={{ fontSize: "var(--font-size-2xl)", fontWeight: "var(--font-weight-heading)", color: "var(--text-default)" }}>
+        <h1
+          style={{
+            fontSize: "var(--font-size-2xl)",
+            fontWeight: "var(--font-weight-heading)",
+            color: "var(--text-default)",
+          }}
+        >
           Row Edit Mode
         </h1>
-        <p style={{ color: "var(--text-subdued-1)", marginTop: "var(--space-8)" }}>
-          Click the edit button to make an entire row editable. Save or cancel to commit or discard changes. Edit button visibility is permission-based.
+        <p
+          style={{
+            color: "var(--text-subdued-1)",
+            marginTop: "var(--space-8)",
+          }}
+        >
+          Click the edit button to make an entire row editable. Save or cancel
+          to commit or discard changes. Edit button visibility is
+          permission-based.
         </p>
       </div>
 
@@ -193,20 +266,32 @@ export default function RowEditModePage() {
           border: "1px solid var(--grey-30)",
         }}
       >
-        <span style={{ fontSize: "var(--font-size-s)", fontWeight: "var(--font-weight-prominent)", color: "var(--text-subdued-1)" }}>
+        <span
+          style={{
+            fontSize: "var(--font-size-s)",
+            fontWeight: "var(--font-weight-prominent)",
+            color: "var(--text-subdued-1)",
+          }}
+        >
           Simulate Permission:
         </span>
         {(Object.keys(permissionConfig) as Permission[]).map((p) => (
           <button
             key={p}
-            onClick={() => { setPermission(p); cancelEdit() }}
+            onClick={() => {
+              setPermission(p);
+              cancelEdit();
+            }}
             style={{
               padding: "var(--space-4) var(--space-12)",
               borderRadius: "var(--radius-6)",
               border: "1px solid",
-              borderColor: permission === p ? "var(--primary-50)" : "var(--grey-40)",
-              backgroundColor: permission === p ? "var(--primary-10)" : "var(--surface-0)",
-              color: permission === p ? "var(--primary-60)" : "var(--text-default)",
+              borderColor:
+                permission === p ? "var(--primary-50)" : "var(--grey-40)",
+              backgroundColor:
+                permission === p ? "var(--primary-10)" : "var(--surface-0)",
+              color:
+                permission === p ? "var(--primary-60)" : "var(--text-default)",
               fontSize: "var(--font-size-s)",
               fontWeight: "var(--font-weight-prominent)",
               cursor: "pointer",
@@ -216,7 +301,13 @@ export default function RowEditModePage() {
           </button>
         ))}
         {!canEdit && (
-          <span style={{ fontSize: "var(--font-size-s)", color: "var(--text-subdued-2)", marginLeft: "var(--space-8)" }}>
+          <span
+            style={{
+              fontSize: "var(--font-size-s)",
+              color: "var(--text-subdued-2)",
+              marginLeft: "var(--space-8)",
+            }}
+          >
             (Edit button hidden for viewers)
           </span>
         )}
@@ -229,12 +320,20 @@ export default function RowEditModePage() {
         rowHeight={48}
         headerRowHeight={40}
         className="rdg-theme"
-        rowClass={(row) => (editingRowId === row.id ? "rdg-row-editing" : undefined)}
+        rowClass={(row) =>
+          editingRowId === row.id ? "rdg-row-editing" : undefined
+        }
       />
 
-      <p style={{ fontSize: "var(--font-size-s)", color: "var(--text-subdued-2)" }}>
-        Role: {permissionConfig[permission].label} — {canEdit ? "Can edit rows" : "Read-only"}
+      <p
+        style={{
+          fontSize: "var(--font-size-s)",
+          color: "var(--text-subdued-2)",
+        }}
+      >
+        Role: {permissionConfig[permission].label} —{" "}
+        {canEdit ? "Can edit rows" : "Read-only"}
       </p>
     </div>
-  )
+  );
 }
