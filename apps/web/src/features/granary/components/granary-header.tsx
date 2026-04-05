@@ -16,9 +16,8 @@ export function GranaryHeader() {
       className="flex items-center justify-between"
       style={{
         height: 56,
-        backgroundColor: "var(--grey-100)",
+        backgroundColor: "#141414",
         padding: "0 var(--space-16)",
-        borderBottom: "1px solid var(--grey-80)",
       }}
     >
       {/* Logo + Brand */}

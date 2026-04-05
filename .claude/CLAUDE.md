@@ -216,7 +216,7 @@ Every card/panel/section must follow this structure:
 **Rules:**
 
 - **Every card** MUST have `backgroundColor: var(--surface-0)` and `borderRadius: var(--radius-8)` — no exceptions
-- **No borders** on cards — surface contrast against `var(--surface-10)` page background is the separator
+- **ZERO borders on ANY card** — all cards use surface-based separation ONLY, never border-based. No `border` property on cards at all. The surface-0 vs surface-10 contrast IS the separator
 - **Card padding:** `var(--space-16)` for KPI cards, standard `CardHeader`/`CardContent` padding for content cards
 - **KPI label format:** `"Label (period) (?)"` — period in parentheses inline with label, tooltip icon after
 - **Side-by-side panels:** Use `grid-cols-2` (equal `1fr 1fr`) by default — never asymmetric unless design explicitly requires it
@@ -634,9 +634,10 @@ All app pages render inside `AppLayout` (`apps/web/src/layouts/app-layout.tsx`):
 - **Token examples:** `var(--primary-50)`, `var(--space-16)`, `var(--radius-8)`, `var(--font-size-m)`
 - **Full token reference:** `packages/theme/src/tokens.css` + `/ui-ux-design` skill
 - **Rule:** Never hardcode colors, spacing, fonts, radius, shadows — always use tokens
-- **Separation (STRICT):** Use surface color contrast to separate areas — **NEVER borders on containers/cards/sections.**
+- **Separation (STRICT) — SURFACE ONLY, NO BORDERS:** All visual separation uses surface color contrast — **NEVER add borders to cards/containers/sections/panels.**
   - Page background: `var(--surface-10)` → Cards/sections: `var(--surface-0)` — the contrast IS the separator
-  - **NO `border: 1px solid var(--grey-20/30)` on cards, sections, panels, or content containers**
+  - **NO `border` property on ANY card, section, panel, or content container — ZERO EXCEPTIONS**
+  - **All cards = surface-based separation ONLY.** Never border-based. If a card has a default border from shadcn, remove it
   - Borders ONLY allowed on: inputs/form fields, table internal row dividers, sidebar/header structural dividers (`borderRight`, `borderBottom`), and interactive selection states
   - If you catch yourself writing `border` on a `<Card>`, `<section>`, or container `<div>`, STOP — remove it and rely on surface contrast
 - **Cards MUST have surface background:** Every card, panel, or content section MUST have `backgroundColor: var(--surface-0)` to visually separate from the `var(--surface-10)` page background. Never leave cards without a surface — floating content with no background looks broken.
