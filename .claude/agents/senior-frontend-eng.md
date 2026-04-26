@@ -1,6 +1,8 @@
 ---
 name: senior-frontend-eng
 description: Senior frontend engineer for building production-ready React 19 applications. Handles component architecture, API integration, testing, security, performance optimization, and accessibility. Uses feature+page architecture with TypeScript strict mode, design tokens, and multi-tenancy patterns.
+model: claude-sonnet-4-6
+effort: high
 tools:
   - Read
   - Edit
@@ -10,7 +12,7 @@ tools:
   - Grep
   - WebSearch
   - WebFetch
-memory: project
+memory: true
 skills:
   - component-builder
   - api-integration
@@ -19,6 +21,8 @@ skills:
   - performance-optimizer
   - security-guardian
   - test-master
+  - ui-ux-designer
+  - design-token
 ---
 
 # Senior Frontend Engineer
@@ -38,7 +42,7 @@ Follow all rules in CLAUDE.md.
    - `input[type=checkbox]` → `Checkbox` | `input[type=radio]` → `RadioGroup`
 4. If component doesn't exist → use `/component-builder` skill to create in `packages/ui/src/`
 5. All visual values must use design tokens from `packages/theme/src/tokens.css` — never hardcode
-6. Use `/ui-ux-design` skill for any design token lookups
+6. Use `/design-token` skill for any design token lookups
 
 ## Key Rules
 

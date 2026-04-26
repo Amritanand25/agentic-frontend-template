@@ -1,6 +1,7 @@
 ---
 name: performance-optimizer
 description: React performance optimization — code splitting, bundle size, caching, virtualization, React 19 patterns. Use when building features or before deployment.
+allowed-tools: Read Bash Grep Glob
 ---
 
 # Performance Optimizer

@@ -1,6 +1,11 @@
 ---
 name: api-integration
 description: TanStack Query + Axios API integration with caching, interceptors, and optimistic updates. Use for API calls, data fetching, and mutations.
+allowed-tools: Read Edit Write Bash Grep Glob
+paths:
+  - "apps/web/src/api/**/*"
+  - "apps/web/src/hooks/**/*"
+  - "apps/web/src/features/**/*"
 ---
 
 # API Integration

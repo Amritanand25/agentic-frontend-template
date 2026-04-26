@@ -1,6 +1,7 @@
 ---
 name: spec-creator
 description: Analyzes user prompts and creates detailed implementation specs in /docs/specs/. Breaks down UI pages, features, and bug fixes into actionable specs with layout patterns, design tokens, state management, and file changes. Use BEFORE implementation.
+allowed-tools: Read Edit Write Bash Grep Glob
 ---
 
 # Spec Creator
@@ -43,7 +44,7 @@ Read the user's prompt and classify:
 **For New Page/View:**
 
 1. Read layout-creator skill → pick layout pattern (1-12)
-2. Read ui-ux-design skill → identify design tokens, colors, typography, spacing
+2. Read design-token skill → identify design tokens, colors, typography, spacing
 3. Search `packages/ui/src/` → list existing components to reuse
 4. Check `apps/web/src/pages/` → understand existing page patterns
 5. Check `apps/web/src/stores/` and `apps/web/src/contexts/` → identify state needs
@@ -51,7 +52,7 @@ Read the user's prompt and classify:
 **For New Component:**
 
 1. Search `packages/ui/src/` → confirm it doesn't exist
-2. Read ui-ux-design skill → get exact tokens (heights, radius, colors, states)
+2. Read design-token skill → get exact tokens (heights, radius, colors, states)
 3. Read component-builder skill → determine simple vs complex, get CVA pattern
 4. Check if sub-components exist to reuse
 
@@ -109,7 +110,7 @@ Include only the sections relevant to the request size and type:
 ### Include for UI (pages, components)
 
 - **Layout Pattern** — pattern # from layout-creator skill
-- **Design Tokens** — exact colors, typography, spacing, heights, radius from ui-ux-design
+- **Design Tokens** — exact colors, typography, spacing, heights, radius from design-token skill
 - **Components** — existing ones from packages/ui/src/ to reuse + new ones needed
 - **Interaction States** — default, hover, active, focus, disabled, loading
 - **Responsive** — breakpoint behavior
@@ -169,7 +170,7 @@ Include only the sections relevant to the request size and type:
 
 - **Scale to the request** — small fix = minimal spec, full module = detailed spec with sub-specs
 - **Always research before writing** — read skills, search codebase
-- **Use exact design tokens** — never invent values, pull from ui-ux-design skill
+- **Use exact design tokens** — never invent values, pull from design-token skill
 - **Use exact layout patterns** — reference by number from layout-creator skill
 - **List real files** — search and confirm paths exist before referencing
 - **Reuse existing components** — search packages/ui/src/ and list what to reuse

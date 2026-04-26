@@ -1,9 +1,15 @@
 ---
-name: design-system-ui
+name: design-token
 description: Design token source of truth — all colors, spacing, typography, radius, shadows, themes (Falcon/Phoenix/Jarvis x Light/Dark), interaction states, and layout rules. Use for any visual/UI decision.
+allowed-tools: Read Grep Glob
+paths:
+  - "apps/**/*.tsx"
+  - "apps/**/*.css"
+  - "packages/ui/**/*.tsx"
+  - "packages/theme/**/*"
 ---
 
-# Design System UI
+# Design Tokens
 
 > Every visual value MUST map to a token. No raw hex, arbitrary px, or invented font sizes.
 

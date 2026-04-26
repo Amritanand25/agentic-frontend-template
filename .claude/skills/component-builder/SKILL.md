@@ -1,6 +1,10 @@
 ---
 name: component-builder
 description: React component creation with LLD, CVA variants, specs, a11y, and design tokens. Use for creating/refactoring any UI component.
+allowed-tools: Read Edit Write Bash Grep Glob
+paths:
+  - "packages/ui/src/**/*"
+  - "apps/**/*.tsx"
 ---
 
 # Component Builder

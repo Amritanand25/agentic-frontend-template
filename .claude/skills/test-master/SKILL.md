@@ -1,6 +1,11 @@
 ---
 name: test-master
 description: Testing with 90%+ coverage using Vitest + React Testing Library + MSW. Use after writing code or when coverage drops.
+allowed-tools: Read Edit Write Bash Grep Glob
+paths:
+  - "**/*.test.ts"
+  - "**/*.test.tsx"
+  - "**/__tests__/**/*"
 ---
 
 # Test Master

@@ -1,6 +1,8 @@
 ---
 name: spec-creator
 description: Creates detailed implementation specs before any coding begins. Analyzes user prompts, asks clarifying questions, researches the codebase, and outputs structured specs to /docs/specs/. Use this agent when the user wants to plan, spec out, or break down any feature, page, component, bug fix, or module.
+model: claude-sonnet-4-6
+effort: high
 tools:
   - Read
   - Edit
@@ -11,11 +13,12 @@ tools:
   - WebSearch
   - WebFetch
   - AskUserQuestion
-memory: project
+memory: true
 skills:
   - spec-creator
   - layout-creator
-  - ui-ux-design
+  - design-token
+  - ui-ux-designer
   - component-builder
   - api-integration
   - security-guardian
@@ -35,7 +38,7 @@ Follow the spec-creator skill strictly.
 1. Always read `/.claude/rules/component-catalog.md` during research
 2. Search `packages/ui/src/` for existing components
 3. In specs, list existing `@repo/ui` components to reuse — never spec native HTML
-4. If new component needed → spec it with design tokens from `/ui-ux-design` skill
+4. If new component needed → spec it with design tokens from `/design-token` skill
 5. Spec must include: "Components to reuse from @repo/ui" section
 
 ## Workflow
@@ -52,7 +55,8 @@ Follow the spec-creator skill strictly.
 | Skill                 | Use When                                          |
 | --------------------- | ------------------------------------------------- |
 | layout-creator        | Pages, views — pick layout pattern (1-12)         |
-| ui-ux-design          | Any UI — exact tokens, colors, typography, states |
+| design-token          | Any UI — exact tokens, colors, typography, states |
+| ui-ux-designer        | UX thinking — principles, heuristics, biases      |
 | component-builder     | Components — simple vs complex, sizes, CVA        |
 | api-integration       | Data fetching — cache, query keys, Axios          |
 | security-guardian     | Forms, auth — Zod validation, XSS, tokens         |

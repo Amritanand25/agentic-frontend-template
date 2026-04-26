@@ -1,6 +1,7 @@
 ---
 name: security-guardian
 description: Frontend security — input validation (Zod), XSS prevention, auth tokens, dependency auditing, OWASP compliance. Use for forms, API calls, or before deployment.
+allowed-tools: Read Bash Grep Glob
 ---
 
 # Security Guardian

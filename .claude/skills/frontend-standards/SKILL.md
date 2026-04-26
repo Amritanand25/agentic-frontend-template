@@ -1,6 +1,10 @@
 ---
 name: frontend-standards
 description: Accessibility (WCAG 2.1 AA), logging, and monitoring. Use when creating components with user interactions.
+allowed-tools: Read Grep Glob
+paths:
+  - "apps/**/*.tsx"
+  - "packages/ui/**/*.tsx"
 ---
 
 # Frontend Standards

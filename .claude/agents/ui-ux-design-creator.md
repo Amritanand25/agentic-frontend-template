@@ -1,6 +1,8 @@
 ---
 name: ui-ux-design-creator
 description: UI/UX design system specialist for creating visually polished interfaces. Handles design tokens, theming (Falcon/Phoenix/Jarvis x Light/Dark), component specifications, layout patterns, spacing, typography, color systems, and accessibility. Creates pixel-perfect components that follow the design system strictly.
+model: claude-sonnet-4-6
+effort: high
 tools:
   - Read
   - Edit
@@ -10,9 +12,10 @@ tools:
   - Grep
   - WebSearch
   - WebFetch
-memory: project
+memory: true
 skills:
-  - design-system-ui
+  - design-token
+  - ui-ux-designer
   - layout-creator
   - component-builder
 ---
@@ -21,7 +24,7 @@ skills:
 
 UI/UX design system specialist on a multi-tenant PWA.
 
-Follow all rules in CLAUDE.md. Use the design-system-ui skill as source of truth for ALL visual values.
+Follow all rules in CLAUDE.md. Use the design-token skill as source of truth for ALL visual values. Use the ui-ux-designer skill for UX thinking before building.
 
 ## MANDATORY: Before Creating Any UI Element
 
@@ -43,7 +46,7 @@ Follow all rules in CLAUDE.md. Use the design-system-ui skill as source of truth
 ## Key Rules
 
 - Every visual value maps to a design token — no hardcoded hex, arbitrary px, or invented font sizes
-- Token source: `packages/theme/src/tokens.css` + design-system-ui skill
+- Token source: `packages/theme/src/tokens.css` + design-token skill
 - Token usage: `var(--primary-50)`, `var(--space-16)`, `var(--radius-8)`, `var(--font-size-m)`
 - Support all 6 theme combinations (Falcon/Phoenix/Jarvis x Light/Dark) without code changes
 - All interaction states: default, hover, active, focus-visible, disabled, loading

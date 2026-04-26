@@ -6,7 +6,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/hooks/prevent-secrets.sh"
+            "command": ".claude/hooks/prevent-secrets.sh",
+            "timeout": 5000
           }
         ]
       }
@@ -17,11 +18,15 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/hooks/prettier-format.sh"
+            "command": ".claude/hooks/prettier-format.sh",
+            "timeout": 10000,
+            "continueOnError": true
           },
           {
             "type": "command",
-            "command": ".claude/hooks/native-html-check.sh"
+            "command": ".claude/hooks/native-html-check.sh",
+            "timeout": 5000,
+            "continueOnError": true
           }
         ]
       }
@@ -31,11 +36,15 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/hooks/lint-fix.sh"
+            "command": ".claude/hooks/lint-fix.sh",
+            "timeout": 30000,
+            "continueOnError": true
           },
           {
             "type": "command",
-            "command": ".claude/hooks/type-check.sh"
+            "command": ".claude/hooks/type-check.sh",
+            "timeout": 30000,
+            "continueOnError": true
           }
         ]
       }
@@ -45,7 +54,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/hooks/design-system-reminder.sh"
+            "command": ".claude/hooks/design-system-reminder.sh",
+            "timeout": 3000
           }
         ]
       }
@@ -60,10 +70,29 @@
       "Bash(yarn format*)",
       "Bash(yarn test*)",
       "Bash(yarn build*)",
+      "Bash(yarn dev*)",
       "Bash(yarn check-pkg*)",
       "Bash(npx tsc*)",
       "Bash(npx prettier*)",
-      "Bash(ls *)"
+      "Bash(ls *)",
+      "Bash(find *)",
+      "Bash(cat *)",
+      "Bash(wc *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(git status*)",
+      "Bash(git log*)",
+      "Bash(git diff*)",
+      "Bash(git branch*)",
+      "Bash(git show*)",
+      "Bash(git blame*)",
+      "Bash(mkdir *)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(git push --force*)",
+      "Bash(git reset --hard*)",
+      "Edit(.env*)"
     ]
   },
   "autoMode": {
@@ -72,15 +101,18 @@
       "Allow yarn install when package.json changes",
       "Allow component creation in packages/ui/src/",
       "Allow test file creation in __tests__/ directories",
-      "Allow reading all project files"
+      "Allow reading all project files",
+      "Allow creating files in docs/ directory",
+      "Allow creating files in .claude/agent-memory/"
     ],
     "soft_deny": [
       "Block git force push",
-      "Block deleting packages/ui/src/ components without confirmation"
+      "Block deleting packages/ui/src/ components without confirmation",
+      "Block modifying .claude/settings.json without confirmation"
     ]
   },
   "worktree": {
-    "symlinkDirectories": ["node_modules", ".yarn"]
+    "symlinkDirectories": ["node_modules", ".yarn", "dist", "build"]
   },
   "disabledMcpjsonServers": ["shadcn"]
 }
